@@ -1,0 +1,10 @@
+.nav {
+    background-color: white;
+    border-right: solid;
+    border-top: solid;
+    border-color: aquamarine;
+    grid-area: n;
+}
+.item {
+    color: black;
+}

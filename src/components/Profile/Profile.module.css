@@ -1,0 +1,41 @@
+.content {
+    border-top: solid;
+    border-left: solid;
+    border-color: aquamarine;
+    grid-area: c;
+}
+
+.wallpaper {
+    margin: 10px;
+}
+
+.ava_description {
+    display: grid;
+    grid-template-areas:
+            "a d";
+    grid-template-rows: 150px;
+    grid-template-columns: 150px 300px;
+    grid-gap: 5px;
+}
+
+.avatar {
+    grid-area: a;
+    border: solid;
+    border-color: aquamarine;
+
+}
+.avatar img {
+    width: 144px;
+    margin: auto;
+}
+
+.description {
+    grid-area: d;
+    border: solid;
+    border-color: aquamarine;
+
+}
+
+.posts_area {
+    margin-top: 15px;
+}
