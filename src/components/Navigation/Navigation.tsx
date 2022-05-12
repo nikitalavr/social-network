@@ -1,23 +1,24 @@
 import React from "react";
 import style from "./Navigation.module.css"
 
+
 export function Navigation() {
     return (
         <nav className={style.nav}>
             <div className={style.item}>
-                <a href={''}>Profile</a>
+                <a href="/profile">Profile</a>
             </div>
             <div className={style.item}>
-                <a href={''}>News</a>
+                <a href="/news">News</a>
             </div>
             <div className={style.item}>
-                <a href={''}>Messages</a>
+                <a href="/messages">Messages</a>
             </div>
             <div className={style.item}>
-                <a href={''}>Music</a>
+                <a href="/music">Music</a>
             </div>
             <div className={style.item}>
-                <a href={''}>Settings</a>
+                <a href="/settings">Settings</a>
             </div>
         </nav>
     );

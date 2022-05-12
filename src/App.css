@@ -9,10 +9,14 @@
     grid-template-rows: 80px auto;
     grid-template-columns: 2fr 10fr;
     grid-gap: 10px;
-
 }
 
-
+.app-wrapper-content {
+    border-top: solid;
+    border-left: solid;
+    border-color: aquamarine;
+    grid-area: c;
+}
 
 
 
