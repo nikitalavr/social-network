@@ -1,25 +1,25 @@
 import React from "react";
 import style from "./Messages.module.css";
+import {NavLink} from "react-router-dom";
 
 export const Messages = () => {
     return (
         <div className={style.messagesWrapper}>
             <div className={style.dialogs}>
-                <h4>My messages</h4>
                 <div className={style.dialog}>
-                    number1
+                    <NavLink to="/dialogs/1">number1</NavLink>
                 </div>
                 <div className={style.dialog}>
-                    number2
+                    <NavLink to="/dialogs/2">number2</NavLink>
                 </div>
                 <div className={style.dialog}>
-                    number3
+                    <NavLink to="/dialogs/3">number3</NavLink>
                 </div>
                 <div className={style.dialog}>
-                    number4
+                    <NavLink to="/dialogs/4">number4</NavLink>
                 </div>
                 <div className={style.dialog}>
-                    number5
+                    <NavLink to="/dialogs/5">number5</NavLink>
                 </div>
 
             </div>
