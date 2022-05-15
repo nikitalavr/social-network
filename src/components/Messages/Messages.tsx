@@ -28,6 +28,7 @@ export const Messages = () => {
                 <div className={style.messageResponse}>message2</div>
                 <div className={style.message}>message3</div>
                 <div className={style.messageResponse}>message4</div>
+                <div className={style.messageResponse}>message4</div>
             </div>
         </div>
     )
