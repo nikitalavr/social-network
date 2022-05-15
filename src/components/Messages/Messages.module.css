@@ -1,8 +1,43 @@
-.header {
-    grid-area: h;
-    background-color: grey;
+.messagesWrapper {
+    display: grid;
+    grid-template-areas:
+            "d m";
+    grid-template-rows: auto;
+    grid-template-columns: 150px auto;
+    grid-gap: 5px;
+    padding: 5px;
+}
+
+.dialogs {
+    grid-area: d;
+    border: solid aquamarine;
 
 }
-.header img {
-    width: 80px;
+
+.dialog {
+
 }
+
+.messages {
+    grid-area: m;
+    border: solid aquamarine;
+    /*display: grid;
+    grid-template-areas:
+            "message messageresponse";
+    grid-template-rows: auto;
+    grid-template-columns: 300px 300px;
+    grid-gap: 5px;
+    padding: 5px;*/
+}
+
+.message {
+    /*grid-area: message;*/
+
+}
+
+.messageResponse {
+    /*grid-area: messageresponse;*/
+
+
+}
+
