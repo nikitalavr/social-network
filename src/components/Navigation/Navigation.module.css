@@ -4,7 +4,16 @@
     border-top: solid;
     border-color: aquamarine;
     grid-area: n;
+    padding: 8px;
+
 }
+
 .item {
-    color: black;
+    color: blue;
+    text-decoration: none;
+}
+
+.active {
+    color: grey;
+    text-decoration: blink;
 }
