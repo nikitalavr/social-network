@@ -1,0 +1,43 @@
+
+
+.wallpaper {
+    margin: 10px;
+}
+
+.ava_description {
+    display: grid;
+    grid-template-areas:
+            "a d";
+    grid-template-rows: 150px;
+    grid-template-columns: 120px 300px;
+    grid-gap: 5px;
+    padding-left: 5px;
+}
+
+.avatar {
+    grid-area: a;
+    border: solid aquamarine;
+
+}
+.avatar img {
+    width: 80px;
+    height: 80px;
+    margin-top: 20px;
+    margin-left: 17px;
+    margin-right: 17px;
+    border-radius: 50%;
+}
+.avatar button{
+    margin-top: 5px;
+    margin-left: 25px;
+}
+
+.description {
+    grid-area: d;
+    border: solid aquamarine;
+
+}
+
+.posts_area {
+    margin-top: 15px;
+}
