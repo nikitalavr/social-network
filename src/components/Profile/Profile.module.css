@@ -3,7 +3,6 @@
 .wallpaper {
     margin: 10px;
 }
-
 .ava_description {
     display: grid;
     grid-template-areas:
@@ -13,6 +12,7 @@
     grid-gap: 5px;
     padding-left: 5px;
 }
+
 
 .avatar {
     grid-area: a;

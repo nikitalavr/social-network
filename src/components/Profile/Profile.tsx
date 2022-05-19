@@ -2,8 +2,11 @@ import React from "react";
 import style from "./Profile.module.css"
 import MyPosts from "./MyPosts/MyPosts";
 
+type ProfilePropsType = {
 
-export function Profile() {
+}
+
+export function Profile(props: ProfilePropsType) {
     return (
         <div>
             <div className={style.wallpaper}>
@@ -22,7 +25,7 @@ export function Profile() {
                     description
                 </div>
             </div>
-            <MyPosts/>
+            <MyPosts />
         </div>
     )
 }

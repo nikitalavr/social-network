@@ -1,43 +1,35 @@
-
-
-.wallpaper {
-    margin: 10px;
-}
-
-.ava_description {
+.postWrapper {
+    margin-top: 10px;
     display: grid;
     grid-template-areas:
-            "a d";
-    grid-template-rows: 150px;
-    grid-template-columns: 120px 300px;
-    grid-gap: 5px;
+            "a t"
+            "a l";
+    grid-template-rows: auto;
+    grid-template-columns: 60px auto;
+    grid-gap: 10px;
     padding-left: 5px;
 }
 
-.avatar {
+.postAvatar {
     grid-area: a;
-    border: solid aquamarine;
 
 }
-.avatar img {
-    width: 80px;
-    height: 80px;
-    margin-top: 20px;
-    margin-left: 17px;
-    margin-right: 17px;
+
+.postAvatar img {
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
     border-radius: 50%;
 }
-.avatar button{
-    margin-top: 5px;
-    margin-left: 25px;
+
+.postText {
+    margin-top: 20px;
+    grid-area: t;
 }
 
-.description {
-    grid-area: d;
-    border: solid aquamarine;
+.likesCount {
+    grid-area: l;
 
-}
-
-.posts_area {
-    margin-top: 15px;
 }
