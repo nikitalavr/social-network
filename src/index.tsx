@@ -1,10 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { addPost, state } from './redux/state';
+import React from "react";
+import { state, subscribe } from "./redux/state";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
-ReactDOM.render(
-    <App dialogsData={state.messagesPage.dialogsData} messagesData={state.messagesPage.messagesData} postData={state.profilePage.myPosts} addPost = {addPost} />,
-    document.getElementById('root')
-);
+let rerenderEntireTree = () => {
+  ReactDOM.render(<App state={state} />, document.getElementById("root"));
+};
+
+rerenderEntireTree();
+
+subscribe(rerenderEntireTree);

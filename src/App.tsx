@@ -9,16 +9,15 @@ import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
 import {
-  DialogItemPropsType,
-  MessageItemPropsType,
-  PostDataType,
+  addPost,
+  onPostChange,
+  RootStateType,
+  sendMessage,
+  updateMessageText,
 } from "./redux/state";
 
 type AppPropsType = {
-  dialogsData: Array<DialogItemPropsType>;
-  messagesData: Array<MessageItemPropsType>;
-  postData: Array<PostDataType>;
-  addPost: (postMessage: string) => void
+  state: RootStateType;
 };
 
 function App(props: AppPropsType) {
@@ -31,14 +30,21 @@ function App(props: AppPropsType) {
           <Routes>
             <Route
               path="/profile"
-              element={<Profile postData={props.postData} addPost={props.addPost}/>}
+              element={
+                <Profile
+                  postData={props.state.profilePage}
+                  onPostChange={onPostChange}
+                  addPost={addPost}
+                />
+              }
             />
             <Route
               path="/messages"
               element={
                 <Messages
-                  dialogsData={props.dialogsData}
-                  messagesData={props.messagesData}
+                  messagesPageData={props.state.messagesPage}
+                  sendMessage={sendMessage}
+                  updateMessageText={updateMessageText}
                 />
               }
             />

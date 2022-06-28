@@ -5,7 +5,7 @@ import style from "./../Messages.module.css";
 
 
 export function MessageItem (props: MessageItemPropsType) {
-    return <div className={style.message}>{props.message}</div>
+    return <div key={props.id} className={style.message}>{props.message}</div>
 }
 
 

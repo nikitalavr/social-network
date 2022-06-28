@@ -1,11 +1,12 @@
 import React from "react";
 import style from "./Profile.module.css";
 import MyPosts from "./MyPosts/MyPosts";
-import { PostDataType } from "../../redux/state";
+import { profilePageType } from "../../redux/state";
 
 type ProfilePropsType = {
-  postData: Array<PostDataType>;
-  addPost: (postMessage: string) => void
+  postData: profilePageType;
+  addPost: (postMessage: string) => void;
+  onPostChange: (t:string) => void
 };
 
 export function Profile(props: ProfilePropsType) {
@@ -27,7 +28,12 @@ export function Profile(props: ProfilePropsType) {
         </div>
         <div className={style.description}>description</div>
       </div>
-      <MyPosts postData={props.postData} addPost={props.addPost}/>
+      <MyPosts
+        postData={props.postData.myPosts}
+        newPostText={props.postData.newPostText}
+        addPost={props.addPost}
+        onPostChange={props.onPostChange}
+      />
     </div>
   );
 }
