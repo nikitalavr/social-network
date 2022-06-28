@@ -1,27 +1,41 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
+import { PostDataType } from "../../../redux/state";
 import style from "../Profile.module.css";
-import Post, {PostPropsType} from "./Post/Post";
+import Post from "./Post/Post";
 
 type MyPostPropsType = {
-
-}
+  postData: Array<PostDataType>;
+  addPost: (postMessage: string) => void
+};
 
 const MyPosts = (props: MyPostPropsType) => {
-    return (
-        <div className={style.posts_area}>
-            My posts
-            <div>
-                <input type="text"/>
-                <button>Add</button>
-            </div>
-            <Post id={1} message={"New message in new project"} likes={21}/>
-            <Post id={2} message={"New message in new project"} likes={21}/>
-            <Post id={3} message={"New message in new project"} likes={21}/>
-            <Post id={4} message={"New message in new project"} likes={21}/>
-        </div>
+  let [posts, setPost] = useState<Array<PostDataType>>(props.postData);
+  let [inputState, setInputState] = useState<string>("")
 
-    );
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputState(e.currentTarget.value)
+  };
 
+  let newPostElement = React.createRef()
+  const addPost = () => {
+    let text = newPostElement.current.value
 }
 
-export default MyPosts
+  let postsToRender = posts.map((p) => (
+    <Post id={p.id} message={p.message} likes={p.likes} />
+  ));
+  
+
+  return (
+    <div className={style.posts_area}>
+      My posts
+      <div>
+        <textarea ref={newPostElement} ></textarea>
+        <button onClick={() => {}} >Add</button>
+      </div>
+      {postsToRender}
+    </div>
+  );
+};
+
+export default MyPosts;

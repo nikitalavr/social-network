@@ -1,13 +1,10 @@
 import React from "react";
+import { PostDataType } from "../../../../redux/state";
 import style from "./post.module.css"
 
-export type PostPropsType = {
-    id: number
-    message: string
-    likes: number
-}
 
-const Post = (props: PostPropsType) => {
+
+const Post = (props: PostDataType) => {
     return (
         <div className={style.postWrapper}>
             <div className={style.postAvatar}>
