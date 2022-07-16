@@ -8,16 +8,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
-import {
-  addPost,
-  onPostChange,
-  RootStateType,
-  sendMessage,
-  updateMessageText,
-} from "./redux/state";
+import { ActionType, RootStateType } from "./redux/state";
+
 
 type AppPropsType = {
-  state: RootStateType;
+  state: RootStateType
+  // addPost: () => void
+  // sendMessage: (messageText: string) => void
+  // updateMessageText: (newText: string) => void
+  // incLike: (postId: string, likeIsPressed: boolean) => void
+  // onPostChange: (newText: string) => void
+  dispatch:(action: ActionType) => void
 };
 
 function App(props: AppPropsType) {
@@ -33,8 +34,7 @@ function App(props: AppPropsType) {
               element={
                 <Profile
                   postData={props.state.profilePage}
-                  onPostChange={onPostChange}
-                  addPost={addPost}
+                  dispatch={props.dispatch}
                 />
               }
             />
@@ -43,8 +43,7 @@ function App(props: AppPropsType) {
               element={
                 <Messages
                   messagesPageData={props.state.messagesPage}
-                  sendMessage={sendMessage}
-                  updateMessageText={updateMessageText}
+                  dispatch={props.dispatch}
                 />
               }
             />
