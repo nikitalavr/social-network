@@ -1,5 +1,5 @@
 import React from "react";
-import { ActionType, PostDataType } from "../../../redux/state";
+import { ActionType, addPostAC, PostDataType, updatePostTextAC } from "../../../redux/state";
 import style from "../Profile.module.css";
 import Post from "./Post/Post";
 
@@ -12,12 +12,12 @@ type MyPostPropsType = {
 const MyPosts = (props: MyPostPropsType) => {
   let newPostElement = React.createRef<HTMLTextAreaElement>();
   const addPost = () => {
-    props.dispatch({type: 'ADD-POST'});
+    props.dispatch(addPostAC());
   };
 
   const onPostChange = () => {
-    props.dispatch({type: "UPDATE-POST-TEXT",newText: newPostElement.current ? newPostElement.current.value : ""
-    });
+    let text = newPostElement.current ? newPostElement.current.value : ""
+    props.dispatch(updatePostTextAC(text));
   };
 
   let postsToRender = props.postData.map((p) => (

@@ -13,11 +13,6 @@ import { ActionType, RootStateType } from "./redux/state";
 
 type AppPropsType = {
   state: RootStateType
-  // addPost: () => void
-  // sendMessage: (messageText: string) => void
-  // updateMessageText: (newText: string) => void
-  // incLike: (postId: string, likeIsPressed: boolean) => void
-  // onPostChange: (newText: string) => void
   dispatch:(action: ActionType) => void
 };
 

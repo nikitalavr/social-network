@@ -28,25 +28,11 @@ export type RootStateType = {
   profilePage: profilePageType;
 };
 
-export type AddPostActionType = {
-  type: "ADD-POST";
-};
-export type SendMessageActionType = {
-  type: "SEND-MESSAGE";
-};
-export type UpdateMessageTextActionType = {
-  type: "UPDATE-MESSAGE-TEXT";
-  newText: string;
-};
-export type IncLikeActionType = {
-  type: "INC-LIKE";
-  postID: string;
-  likeIsPressed: boolean;
-};
-export type UpdatePostTextActionType = {
-  type: "UPDATE-POST-TEXT";
-  newText: string;
-};
+export type AddPostActionType = ReturnType<typeof addPostAC>
+export type SendMessageActionType = ReturnType<typeof sendMessageAC>
+export type UpdateMessageTextActionType = ReturnType<typeof updateMessageTextAC>
+export type IncLikeActionType = ReturnType<typeof incLikeAC>
+export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>
 
 export type ActionType =
   | AddPostActionType
@@ -62,6 +48,8 @@ export type StoreType = {
   subscribe: (observer: () => void) => void;
   dispatch: (action: ActionType) => void;
 };
+
+
 
 export let store: StoreType = {
   _state: {
@@ -124,7 +112,7 @@ export let store: StoreType = {
         this._rerender();
         break;
       case "INC-LIKE":
-        let likeIsPressedFlag = !action.likeIsPressed
+        let likeIsPressedFlag = !action.likeIsPressed;
         console.log(likeIsPressedFlag);
 
         this._state.profilePage.myPosts.map((p) =>
@@ -141,3 +129,35 @@ export let store: StoreType = {
     }
   },
 };
+
+export const addPostAC = () => {
+  return {
+    type: "ADD-POST",
+  } as const;
+};
+export const sendMessageAC = () => {
+  return {
+    type: "SEND-MESSAGE",
+  } as const;
+};
+export const updateMessageTextAC = (newText: string) => {
+  return {
+    type: "UPDATE-MESSAGE-TEXT",
+    newText,
+  } as const;
+};
+export const incLikeAC = (postID: string, likeIsPressed: boolean) => {
+  return {
+    type: "INC-LIKE",
+    postID,
+    likeIsPressed,
+  } as const;
+};
+export const updatePostTextAC = (newText: string) => {
+  return {
+    type: "UPDATE-POST-TEXT",
+    newText
+  } as const
+}
+
+

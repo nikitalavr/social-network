@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Messages.module.css";
 import { MessageItem } from "./MessagesItem/MessagesItem";
 import { DialogItem } from "./DialogsItem/DialogsItem";
-import { ActionType, messagesPageType } from "../../redux/state";
+import { ActionType, messagesPageType, sendMessageAC, updateMessageTextAC } from "../../redux/state";
 
 type MessagesPropsType = {
   messagesPageData: messagesPageType;
@@ -13,16 +13,12 @@ export const Messages = (props: MessagesPropsType) => {
   let newMessageElement = React.createRef<HTMLTextAreaElement>();
 
   const sendMessage = () => {
-    props.dispatch({
-      type: "SEND-MESSAGE",
-    });
+    props.dispatch(sendMessageAC());
   };
 
   const onChangeHandler = () => {
-    props.dispatch({
-      type: "UPDATE-MESSAGE-TEXT",
-      newText: newMessageElement.current ? newMessageElement.current.value : "",
-    });
+    let text = newMessageElement.current ? newMessageElement.current.value : ""
+    props.dispatch(updateMessageTextAC(text));
   };
 
   const messagesToRender = props.messagesPageData.messagesData.map((m) => (
