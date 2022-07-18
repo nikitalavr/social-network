@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./../Messages.module.css";
 import {NavLink} from "react-router-dom";
-import { DialogItemPropsType } from "../../../redux/state";
+import { DialogItemPropsType } from "../../../redux/store";
 
 
 export function DialogItem (props: DialogItemPropsType) {

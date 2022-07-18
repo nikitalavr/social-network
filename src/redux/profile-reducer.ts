@@ -1,12 +1,19 @@
 import { v1 } from "uuid";
-import { ActionType, PostDataType, ProfilePageType } from "./state";
+import { ActionType, PostDataType, ProfilePageType } from "./store";
 
 export type AddPostActionType = ReturnType<typeof addPostAC>;
 export type IncLikeActionType = ReturnType<typeof incLikeAC>;
 export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
 
+let initialState = {
+  myPosts: [
+    { id: v1(), message: "New message1", likes: 0, likeIsPressed: false },
+  ],
+  newPostText: "",
+}
+
 export const profileReducer = (
-  state: ProfilePageType,
+  state: ProfilePageType = initialState,
   action: ActionType
 ): ProfilePageType => {
   switch (action.type) {

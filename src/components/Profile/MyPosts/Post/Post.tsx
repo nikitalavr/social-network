@@ -1,6 +1,6 @@
 import React from "react";
 import { incLikeAC } from "../../../../redux/profile-reducer";
-import { ActionType } from "../../../../redux/state";
+import { ActionType } from "../../../../redux/store";
 import style from "./post.module.css";
 
 type PostType = {

@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Messages.module.css";
 import { MessageItem } from "./MessagesItem/MessagesItem";
 import { DialogItem } from "./DialogsItem/DialogsItem";
-import { ActionType, MessagesPageType } from "../../redux/state";
+import { ActionType, MessagesPageType } from "../../redux/store";
 import { sendMessageAC, updateMessageTextAC } from "../../redux/messages-reducer";
 
 type MessagesPropsType = {
