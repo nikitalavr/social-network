@@ -1,4 +1,15 @@
 import { v1 } from "uuid";
+import {
+  messagesReducer,
+  SendMessageActionType,
+  UpdateMessageTextActionType,
+} from "./messages-reducer";
+import {
+  AddPostActionType,
+  IncLikeActionType,
+  profileReducer,
+  UpdatePostTextActionType,
+} from "./profile-reducer";
 
 export type DialogItemPropsType = {
   name: string;
@@ -14,33 +25,19 @@ export type PostDataType = {
   likes: number;
   likeIsPressed: boolean;
 };
-export type messagesPageType = {
+export type MessagesPageType = {
   dialogsData: Array<DialogItemPropsType>;
   messagesData: Array<MessageItemPropsType>;
   newMessageText: string;
 };
-export type profilePageType = {
+export type ProfilePageType = {
   myPosts: Array<PostDataType>;
   newPostText: string;
 };
 export type RootStateType = {
-  messagesPage: messagesPageType;
-  profilePage: profilePageType;
+  messagesPage: MessagesPageType;
+  profilePage: ProfilePageType;
 };
-
-export type AddPostActionType = ReturnType<typeof addPostAC>
-export type SendMessageActionType = ReturnType<typeof sendMessageAC>
-export type UpdateMessageTextActionType = ReturnType<typeof updateMessageTextAC>
-export type IncLikeActionType = ReturnType<typeof incLikeAC>
-export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>
-
-export type ActionType =
-  | AddPostActionType
-  | SendMessageActionType
-  | UpdateMessageTextActionType
-  | IncLikeActionType
-  | UpdatePostTextActionType;
-
 export type StoreType = {
   _state: RootStateType;
   getState: () => RootStateType;
@@ -48,6 +45,13 @@ export type StoreType = {
   subscribe: (observer: () => void) => void;
   dispatch: (action: ActionType) => void;
 };
+
+export type ActionType =
+  | AddPostActionType
+  | IncLikeActionType
+  | UpdatePostTextActionType
+  | UpdateMessageTextActionType
+  | SendMessageActionType;
 
 
 
@@ -87,77 +91,11 @@ export let store: StoreType = {
   },
   _rerender() {},
   dispatch(action: ActionType) {
-    switch (action.type) {
-      case "ADD-POST":
-        let newPost: PostDataType = {
-          id: v1(),
-          message: this._state.profilePage.newPostText,
-          likes: 0,
-          likeIsPressed: false,
-        };
-        this._state.profilePage.myPosts.unshift(newPost);
-        this._state.profilePage.newPostText = "";
-        this._rerender();
-        break;
-      case "SEND-MESSAGE":
-        this._state.messagesPage.messagesData.push({
-          id: v1(),
-          message: this._state.messagesPage.newMessageText,
-        });
-        this._state.messagesPage.newMessageText = "";
-        this._rerender();
-        break;
-      case "UPDATE-MESSAGE-TEXT":
-        this._state.messagesPage.newMessageText = action.newText;
-        this._rerender();
-        break;
-      case "INC-LIKE":
-        let likeIsPressedFlag = !action.likeIsPressed;
-        console.log(likeIsPressedFlag);
-
-        this._state.profilePage.myPosts.map((p) =>
-          p.id === action.postID
-            ? { ...p, likes: p.likes++, likeIsPressed: likeIsPressedFlag }
-            : p
-        );
-        this._rerender();
-        break;
-      case "UPDATE-POST-TEXT":
-        this._state.profilePage.newPostText = action.newText;
-        this._rerender();
-        break;
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.messagesPage = messagesReducer(
+      this._state.messagesPage,
+      action
+    );
+    this._rerender();
   },
 };
-
-export const addPostAC = () => {
-  return {
-    type: "ADD-POST",
-  } as const;
-};
-export const sendMessageAC = () => {
-  return {
-    type: "SEND-MESSAGE",
-  } as const;
-};
-export const updateMessageTextAC = (newText: string) => {
-  return {
-    type: "UPDATE-MESSAGE-TEXT",
-    newText,
-  } as const;
-};
-export const incLikeAC = (postID: string, likeIsPressed: boolean) => {
-  return {
-    type: "INC-LIKE",
-    postID,
-    likeIsPressed,
-  } as const;
-};
-export const updatePostTextAC = (newText: string) => {
-  return {
-    type: "UPDATE-POST-TEXT",
-    newText
-  } as const
-}
-
-

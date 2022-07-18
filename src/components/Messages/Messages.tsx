@@ -2,10 +2,11 @@ import React from "react";
 import style from "./Messages.module.css";
 import { MessageItem } from "./MessagesItem/MessagesItem";
 import { DialogItem } from "./DialogsItem/DialogsItem";
-import { ActionType, messagesPageType, sendMessageAC, updateMessageTextAC } from "../../redux/state";
+import { ActionType, MessagesPageType } from "../../redux/state";
+import { sendMessageAC, updateMessageTextAC } from "../../redux/messages-reducer";
 
 type MessagesPropsType = {
-  messagesPageData: messagesPageType;
+  messagesPageData: MessagesPageType;
   dispatch: (action: ActionType) => void;
 };
 
