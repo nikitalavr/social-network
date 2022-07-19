@@ -1,6 +1,4 @@
 import React from "react";
-import { incLikeAC } from "../../../../redux/profile-reducer";
-import { ActionType } from "../../../../redux/store";
 import style from "./post.module.css";
 
 type PostType = {
@@ -8,12 +6,12 @@ type PostType = {
   message: string;
   likes: number;
   likeIsPressed: boolean;
-  dispatch: (action: ActionType) => void;
+  incLike: (postID: string, likeIsPressed:boolean) => void;
 };
 
 const Post = (props: PostType) => {
   const onClickHandler = () => {
-    props.dispatch(incLikeAC(props.id, props.likeIsPressed));
+    props.incLike(props.id, props.likeIsPressed);
   };
   return (
     <div key={props.id} className={style.postWrapper}>

@@ -3,12 +3,12 @@ import "./App.css";
 import { Header } from "./components/Header/Header";
 import { Navigation } from "./components/Navigation/Navigation";
 import { Profile } from "./components/Profile/Profile";
-import { Messages } from "./components/Messages/Messages";
 import { Route, Routes } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
 import { ActionType, RootStateType } from "./redux/store";
+import { MessagesContainer } from "./components/Messages/MessagesContainer";
 
 
 type AppPropsType = {
@@ -35,7 +35,7 @@ function App(props: AppPropsType) {
             <Route
               path="/messages"
               element={
-                <Messages
+                <MessagesContainer
                   messagesPageData={props.state.messagesPage}
                   dispatch={props.dispatch}
                 />

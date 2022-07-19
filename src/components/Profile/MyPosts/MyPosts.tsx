@@ -1,24 +1,28 @@
 import React from "react";
-import { addPostAC, updatePostTextAC } from "../../../redux/profile-reducer";
-import { ActionType, PostDataType } from "../../../redux/store";
+
+import { PostDataType } from "../../../redux/store";
 import style from "../Profile.module.css";
 import Post from "./Post/Post";
 
 type MyPostPropsType = {
   postData: Array<PostDataType>;
   newPostText: string;
-  dispatch: (action: ActionType) => void;
+  updatePostText: (text: string) => void
+  addPost: () => void
+  incLike: (postID: string, likeIsPressed:boolean) => void
 };
 
 const MyPosts = (props: MyPostPropsType) => {
   let newPostElement = React.createRef<HTMLTextAreaElement>();
   const addPost = () => {
-    props.dispatch(addPostAC());
+    props.addPost();
+    //props.dispatch(addPostAC());
   };
 
   const onPostChange = () => {
     let text = newPostElement.current ? newPostElement.current.value : ""
-    props.dispatch(updatePostTextAC(text));
+    props.updatePostText(text)
+    //props.dispatch(updatePostTextAC(text));
   };
 
   let postsToRender = props.postData.map((p) => (
@@ -28,7 +32,7 @@ const MyPosts = (props: MyPostPropsType) => {
       message={p.message}
       likes={p.likes}
       likeIsPressed={p.likeIsPressed}
-      dispatch={props.dispatch}
+      incLike={props.incLike}
     />
   ));
 
