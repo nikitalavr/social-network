@@ -7,47 +7,28 @@ import { Route, Routes } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
-import { ActionType, RootStateType } from "./redux/store";
 import { MessagesContainer } from "./components/Messages/MessagesContainer";
 
+// type AppPropsType = {
+//   state: RootStateType
+//   dispatch:(action: ActionType) => void
+// };
 
-type AppPropsType = {
-  state: RootStateType
-  dispatch:(action: ActionType) => void
-};
-
-function App(props: AppPropsType) {
+function App() {
   return (
-       <div className="app-wrapper">
-        <Header />
-        <Navigation />
-        <div className="app-wrapper-content">
-          <Routes>
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  postData={props.state.profilePage}
-                  dispatch={props.dispatch}
-                />
-              }
-            />
-            <Route
-              path="/messages"
-              element={
-                <MessagesContainer
-                  messagesPageData={props.state.messagesPage}
-                  dispatch={props.dispatch}
-                />
-              }
-            />
-            <Route path="/news" element={<News />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </div>
+    <div className="app-wrapper">
+      <Header />
+      <Navigation />
+      <div className="app-wrapper-content">
+        <Routes>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/messages" element={<MessagesContainer />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/music" element={<Music />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
       </div>
-    
+    </div>
   );
 }
 
