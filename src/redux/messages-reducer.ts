@@ -1,4 +1,3 @@
-import { detachClipboardStubFromView } from "@testing-library/user-event/dist/types/utils";
 import { v1 } from "uuid";
 
 export type MessageItemPropsType = {
