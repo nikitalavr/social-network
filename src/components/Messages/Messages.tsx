@@ -2,7 +2,8 @@ import React from "react";
 import style from "./Messages.module.css";
 import { MessageItem } from "./MessagesItem/MessagesItem";
 import { DialogItem } from "./DialogsItem/DialogsItem";
-import { MessagesPageType } from "../../redux/store";
+import { MessagesPageType } from "../../redux/messages-reducer";
+
 
 type MessagesPropsType = {
   messagesPageData: MessagesPageType;

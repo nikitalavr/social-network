@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageItemPropsType } from "../../../redux/store";
+import { MessageItemPropsType } from "../../../redux/messages-reducer";
 import style from "./../Messages.module.css";
 
 

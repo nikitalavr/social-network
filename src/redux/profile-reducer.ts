@@ -1,16 +1,32 @@
 import { v1 } from "uuid";
-import { ActionType, PostDataType, ProfilePageType } from "./store";
+
+export type PostDataType = {
+  id: string;
+  message: string;
+  likes: number;
+  likeIsPressed: boolean;
+};
+
+export type ProfilePageType = {
+  myPosts: Array<PostDataType>;
+  newPostText: string;
+};
 
 export type AddPostActionType = ReturnType<typeof addPostAC>;
 export type IncLikeActionType = ReturnType<typeof incLikeAC>;
 export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
+
+export type ActionType =
+  | AddPostActionType
+  | IncLikeActionType
+  | UpdatePostTextActionType;
 
 let initialState = {
   myPosts: [
     { id: v1(), message: "New message1", likes: 0, likeIsPressed: false },
   ],
   newPostText: "",
-}
+};
 
 export const profileReducer = (
   state: ProfilePageType = initialState,
@@ -18,32 +34,43 @@ export const profileReducer = (
 ): ProfilePageType => {
   switch (action.type) {
     case "ADD-POST":
-      let newPost: PostDataType = {
-        id: v1(),
-        message: state.newPostText,
-        likes: 0,
-        likeIsPressed: false,
+      return {
+        ...state,
+        myPosts: [
+          {
+            id: v1(),
+            message: state.newPostText,
+            likes: 0,
+            likeIsPressed: false,
+          },
+          ...state.myPosts,
+        ],
+        newPostText: "",
       };
-      state.myPosts.unshift(newPost);
-      state.newPostText = "";
-      break;
     case "INC-LIKE":
-      let likeIsPressedFlag = !action.likeIsPressed;
-      console.log(likeIsPressedFlag);
-
-      state.myPosts.map((p) =>
-        p.id === action.postID
-          ? { ...p, likes: p.likes++, likeIsPressed: likeIsPressedFlag }
-          : p
-      );
-      break;
+      if (action.likeIsPressed)
+        return {
+          ...state,
+          myPosts: state.myPosts.map((p) =>
+            p.id === action.postID
+              ? { ...p, likes: p.likes - 1, likeIsPressed: false }
+              : p
+          ),
+        };
+      else
+        return {
+          ...state,
+          myPosts: state.myPosts.map((p) =>
+            p.id === action.postID
+              ? { ...p, likes: p.likes + 1, likeIsPressed: true }
+              : p
+          ),
+        };
     case "UPDATE-POST-TEXT":
-      state.newPostText = action.newText;
-      break;
+      return { ...state, newPostText: action.newText };
     default:
       return state;
   }
-  return state;
 };
 
 export const addPostAC = () => {

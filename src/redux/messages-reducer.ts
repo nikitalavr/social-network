@@ -1,12 +1,30 @@
+import { detachClipboardStubFromView } from "@testing-library/user-event/dist/types/utils";
 import { v1 } from "uuid";
-import { ActionType, MessagesPageType } from "./store";
+
+export type MessageItemPropsType = {
+  message: string;
+  id: string;
+};
+
+export type DialogItemPropsType = {
+  name: string;
+  id: string;
+};
+
+export type MessagesPageType = {
+  dialogsData: Array<DialogItemPropsType>;
+  messagesData: Array<MessageItemPropsType>;
+  newMessageText: string;
+};
 
 export type SendMessageActionType = ReturnType<typeof sendMessageAC>;
 export type UpdateMessageTextActionType = ReturnType<
   typeof updateMessageTextAC
 >;
 
-let initialState = {
+export type ActionType = SendMessageActionType | UpdateMessageTextActionType;
+
+let initialState: MessagesPageType = {
   dialogsData: [
     { id: v1(), name: "Dmitriy" },
     { id: v1(), name: "Kate" },
@@ -24,7 +42,7 @@ let initialState = {
     { id: v1(), message: "message6" },
   ],
   newMessageText: "",
-}
+};
 
 export const messagesReducer = (
   state: MessagesPageType = initialState,
@@ -32,19 +50,20 @@ export const messagesReducer = (
 ): MessagesPageType => {
   switch (action.type) {
     case "SEND-MESSAGE":
-      state.messagesData.push({
-        id: v1(),
-        message: state.newMessageText,
-      });
-      state.newMessageText = "";
-      break;
+      return {
+        ...state,
+        messagesData: [
+          ...state.messagesData,
+          { id: v1(), message: state.newMessageText },
+        ],
+        newMessageText: "",
+      };
+
     case "UPDATE-MESSAGE-TEXT":
-      state.newMessageText = action.newText;
-      break;
+      return { ...state, newMessageText: action.newText };
     default:
       return state;
   }
-  return state;
 };
 
 export const sendMessageAC = () => {

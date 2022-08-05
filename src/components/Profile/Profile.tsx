@@ -1,6 +1,5 @@
 import React from "react";
-import { ActionType, ProfilePageType } from "../../redux/store";
-import MyPostsContainer from "./MyPosts/MyPosts-container";
+import {MyPostsContainer} from "./MyPosts/MyPosts-container";
 import ProfileInfo from "./ProfileInfo";
 
 // type ProfilePropsType = {

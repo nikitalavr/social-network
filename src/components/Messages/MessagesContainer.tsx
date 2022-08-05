@@ -1,36 +1,65 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import {
+  MessagesPageType,
   sendMessageAC,
   updateMessageTextAC,
 } from "../../redux/messages-reducer";
+import { ReduxStateType } from "../../redux/redux-store";
 import { Messages } from "./Messages";
-import StoreContext from "../../store-context";
 
-// type MessagesPropsType = {
-//   messagesPageData: MessagesPageType;
-//   dispatch: (action: ActionType) => void;
+// export const MessagesContainer = () => {
+//   return (
+//     <StoreContext.Consumer>
+//       {(store) => {
+//         const sendMessage = () => {
+//           store.dispatch(sendMessageAC());
+//         };
+
+//         const updateMessageText = (text: string) => {
+//           store.dispatch(updateMessageTextAC(text));
+//         };
+
+//         return (
+//           <Messages
+//             messagesPageData={store.getState().messagesPage}
+//             sendMessage={sendMessage}
+//             updateMessageText={updateMessageText}
+//           />
+//         );
+//       }}
+//     </StoreContext.Consumer>
+//   );
 // };
 
-export const MessagesContainer = () => {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        const sendMessage = () => {
-          store.dispatch(sendMessageAC());
-        };
+type MapStatePropsType = {
+  messagesPageData: MessagesPageType;
+}
 
-        const updateMessageText = (text: string) => {
-          store.dispatch(updateMessageTextAC(text));
-        };
+type MapDispatchToPropsType = {
+  sendMessage: () => void
+  updateMessageText: (text: string) => void
+}
 
-        return (
-          <Messages
-            messagesPageData={store.getState().messagesPage}
-            sendMessage={sendMessage}
-            updateMessageText={updateMessageText}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
+  return {
+    messagesPageData: state.messagesPage,
+  };
 };
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+  return {
+    sendMessage: () => {
+      dispatch(sendMessageAC());
+    },
+    updateMessageText: (text: string) => {
+      dispatch(updateMessageTextAC(text));
+    },
+  };
+};
+
+export const MessagesContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Messages);

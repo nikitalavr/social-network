@@ -15,6 +15,7 @@ import { MessagesContainer } from "./components/Messages/MessagesContainer";
 // };
 
 function App() {
+  
   return (
     <div className="app-wrapper">
       <Header />

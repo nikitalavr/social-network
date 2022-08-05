@@ -9,10 +9,12 @@ let reducers = combineReducers({
   messagesPage: messagesReducer,
 });
 
-type RootState = typeof reducers;
+export type RootState = typeof reducers;
 
 export type ReduxStateType = ReturnType<RootState>
 
 let store = createStore(reducers);
+
+
 
 export default store;

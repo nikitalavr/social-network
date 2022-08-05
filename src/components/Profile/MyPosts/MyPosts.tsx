@@ -1,6 +1,6 @@
 import React from "react";
+import { PostDataType } from "../../../redux/profile-reducer";
 
-import { PostDataType } from "../../../redux/store";
 import style from "../Profile.module.css";
 import Post from "./Post/Post";
 
