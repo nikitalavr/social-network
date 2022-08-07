@@ -8,14 +8,9 @@ import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
 import { MessagesContainer } from "./components/Messages/MessagesContainer";
-
-// type AppPropsType = {
-//   state: RootStateType
-//   dispatch:(action: ActionType) => void
-// };
+import { UsersContainer } from "./components/Users/UsersContainer";
 
 function App() {
-  
   return (
     <div className="app-wrapper">
       <Header />
@@ -27,6 +22,7 @@ function App() {
           <Route path="/news" element={<News />} />
           <Route path="/music" element={<Music />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/users" element={<UsersContainer />} />
         </Routes>
       </div>
     </div>
