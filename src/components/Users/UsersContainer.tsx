@@ -14,8 +14,8 @@ type MapStateToPropsType = {
     users: Array<UserDataType>
 }
 type MapDispatchToPropsType = {
-    follow: (userID: string) => void
-    unfollow: (userID: string) => void
+    follow: (userID: number) => void
+    unfollow: (userID: number) => void
     setUsers: (users: Array<UserDataType>) => void
 }
 
@@ -26,8 +26,8 @@ const mapStateToProps = (state: ReduxStateType):MapStateToPropsType => {
 };
 const mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
   return {
-    follow: (userID: string) => dispatch(followAC(userID)),
-    unfollow: (userID: string) => dispatch(unfollowAC(userID)),
+    follow: (userID: number) => dispatch(followAC(userID)),
+    unfollow: (userID: number) => dispatch(unfollowAC(userID)),
     setUsers: (users: Array<UserDataType>) => dispatch(setUsersAC(users)),
   };
 };

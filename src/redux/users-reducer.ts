@@ -1,17 +1,21 @@
-import { v1 } from "uuid";
-
 export type LocationType = {
   city: string;
   country: string;
 };
 
+type PhotosType = {
+  small: string
+  large: string
+}
+
 export type UserDataType = {
-  id: string;
-  avatar: string;
+  name: string;
+  id: number;
+  photos: PhotosType;
   fullName: string;
-  location: LocationType;
+  uniqueUrlName: string;
   status: string;
-  followStatus: boolean;
+  followed: boolean;
 };
 
 export type UsersStateType = {
@@ -70,7 +74,7 @@ export const usersReduser = (
   }
 };
 
-export const followAC = (userID: string) => {
+export const followAC = (userID: number) => {
   return {
     type: "FOLLOW",
     payload: {
@@ -78,7 +82,7 @@ export const followAC = (userID: string) => {
     },
   } as const;
 };
-export const unfollowAC = (userID: string) => {
+export const unfollowAC = (userID: number) => {
   return {
     type: "UNFOLLOW",
     payload: {
@@ -86,7 +90,7 @@ export const unfollowAC = (userID: string) => {
     },
   } as const;
 };
-export const showMoreAC = (userID: string) => {
+export const showMoreAC = (userID: number) => {
   return {
     type: "SHOW-MORE-USERS",
     payload: {

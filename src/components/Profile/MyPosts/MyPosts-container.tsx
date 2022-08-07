@@ -8,7 +8,6 @@ import {
   updatePostTextAC,
 } from "../../../redux/profile-reducer";
 import { ReduxStateType } from "../../../redux/redux-store";
-//import { ActionType, PostDataType } from "../../../redux/store";
 import MyPosts from "./MyPosts";
 
 // const MyPostsContainer = () => {
