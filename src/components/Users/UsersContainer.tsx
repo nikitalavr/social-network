@@ -6,7 +6,7 @@ import {
   setUsersAC,
   unfollowAC,
   UserDataType,
-  UsersStateType,
+  
 } from "../../redux/users-reducer";
 import Users from "./Users";
 
