@@ -1,35 +1,34 @@
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { ReduxStateType } from "../../redux/redux-store";
-import {
-  followAC,
-  setUsersAC,
-  unfollowAC,
-  UserDataType,
-  
-} from "../../redux/users-reducer";
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/redux-store";
+import { setCurrentPageAC, setUsersTC } from "../../redux/users-reducer";
 import Users from "./Users";
 
-type MapStateToPropsType = {
-    users: Array<UserDataType>
-}
-type MapDispatchToPropsType = {
-    follow: (userID: number) => void
-    unfollow: (userID: number) => void
-    setUsers: (users: Array<UserDataType>) => void
-}
+const UsersContainer = () => {
+  const users = useAppSelector((state) => state.users);
+  const dispatch = useAppDispatch();
 
-const mapStateToProps = (state: ReduxStateType):MapStateToPropsType => {
-  return {
-    users: state.users.users,
+  useEffect(() => {
+    dispatch(setUsersTC({ count: users.count, page: users.page }));
+  }, [dispatch, users.count, users.page]);
+
+  const setCurrentPage = (page: number) => {
+    dispatch(setCurrentPageAC(page));
   };
-};
-const mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
-  return {
-    follow: (userID: number) => dispatch(followAC(userID)),
-    unfollow: (userID: number) => dispatch(unfollowAC(userID)),
-    setUsers: (users: Array<UserDataType>) => dispatch(setUsersAC(users)),
-  };
+  const navigateToUserProfile = () => {
+    debugger
+    return <Navigate to="/profile"/>
+  }
+  return (
+    <Users
+      users={users.users}
+      setCurrentPage={setCurrentPage}
+      totalPagesCount={users.totalPagesCount}
+      currentPage={users.page}
+      count={users.count}
+      navigateToUserProfile={navigateToUserProfile}
+    />
+  );
 };
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+export default UsersContainer;

@@ -6,7 +6,7 @@ import {
   sendMessageAC,
   updateMessageTextAC,
 } from "../../redux/messages-reducer";
-import { ReduxStateType } from "../../redux/redux-store";
+import { RootState } from "../../redux/redux-store";
 import { Messages } from "./Messages";
 
 // export const MessagesContainer = () => {
@@ -42,7 +42,7 @@ type MapDispatchToPropsType = {
   updateMessageText: (text: string) => void
 }
 
-const mapStateToProps = (state: ReduxStateType): MapStatePropsType => {
+const mapStateToProps = (state: RootState): MapStatePropsType => {
   return {
     messagesPageData: state.messagesPage,
   };

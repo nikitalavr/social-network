@@ -25,7 +25,9 @@ export const authAPI = {
 
 export const usersAPI = {
   get(count?: number, page?: number, term?: string, friend?: boolean) {
-    return instance.get(`users?${count ? `count=${count}` : ""}${page ? `&page=${page}`:``}`);
+    return instance.get<UserResponseType>(
+      `users?${count ? `count=${count}` : ""}${page ? `&page=${page}` : ``}`
+    );
   },
 };
 
@@ -41,10 +43,30 @@ export const followAPI = {
   },
 };
 
+
 export const profileAPI = {
   getUserProfile(userId: number) {
     return instance.get<UserProfileType>(`profile/${userId}`);
   },
+};
+
+type UserResponseType = {
+  items: UserType[];
+  totalCount: number;
+  error: string;
+};
+
+export type UserType = {
+  name: string;
+  id: number;
+  photos: PhotosType;
+  status: string;
+  followed: boolean;
+};
+
+type PhotosType = {
+  large: string;
+  small: string;
 };
 
 export type AuthLoginRequestType = {
@@ -65,13 +87,13 @@ type AuthMeDataType = {
   login: string;
 };
 
-type ResponseType<D = {}> = {
+export type ResponseType<D = {}> = {
   resultCode: number;
   messages: string[];
   data: D;
 };
 
-type UserProfileType = {
+export type UserProfileType = {
   userId: number;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;

@@ -7,7 +7,7 @@ import {
   PostDataType,
   updatePostTextAC,
 } from "../../../redux/profile-reducer";
-import { ReduxStateType } from "../../../redux/redux-store";
+import { RootState } from "../../../redux/redux-store";
 import MyPosts from "./MyPosts";
 
 // const MyPostsContainer = () => {
@@ -48,7 +48,7 @@ type MapDispatchToPropsType = {
   incLike: (postID: string, likeIsPressed: boolean) => void;
 };
 
-const mapStateToProps = (state: ReduxStateType): MapStateToPropsType => {
+const mapStateToProps = (state: RootState): MapStateToPropsType => {
   return {
     postData: state.profilePage.myPosts,
     newPostText: state.profilePage.newPostText,

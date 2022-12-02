@@ -1,53 +1,37 @@
-export type LocationType = {
-  city: string;
-  country: string;
+import { usersAPI, UserType } from "./../api/api";
+import { Dispatch } from "redux";
+
+type InitialStateType = {
+  users: UserType[];
+  page: number;
+  count: number;
+  totalPagesCount: number
 };
 
-type PhotosType = {
-  small: string
-  large: string
-}
-
-export type UserDataType = {
-  name: string;
-  id: number;
-  photos: PhotosType;
-  fullName: string;
-  uniqueUrlName: string;
-  status: string;
-  followed: boolean;
-};
-
-export type UsersStateType = {
-  users: Array<UserDataType>;
-};
-
-const initialState: UsersStateType = {
-  users: [
-//     {
-//       id: v1(),
-//       avatar: "avatar",
-//       fullName: "Nikita",
-//       location: { city: "Astrakhan", country: "Russia" },
-//       status: "fine",
-//       followStatus: false,
-//     },
-  ],
+const initialState: InitialStateType = {
+  users: [],
+  page: 1,
+  count: 10,
+  totalPagesCount: 0,
 };
 
 type FollowACType = ReturnType<typeof followAC>;
 type UnfollowACType = ReturnType<typeof unfollowAC>;
-type ShowMoreACType = ReturnType<typeof showMoreAC>;
-type SetUsersACType = ReturnType<typeof setUsersAC>;
+type ShowMoreACType = ReturnType<typeof showMoreUsersAC>;
+export type SetUsersACType = ReturnType<typeof setUsersAC>;
+type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>;
+type SetTotalCountACType = ReturnType<typeof setTotalCountAC>;
 
 type ActionUserReduserType =
   | FollowACType
   | UnfollowACType
   | ShowMoreACType
-  | SetUsersACType;
+  | SetUsersACType
+  | SetCurrentPageACType
+  | SetTotalCountACType;
 
 export const usersReduser = (
-  state: UsersStateType = initialState,
+  state: InitialStateType = initialState,
   action: ActionUserReduserType
 ) => {
   switch (action.type) {
@@ -66,9 +50,21 @@ export const usersReduser = (
         ),
       };
     case "SET-USERS":
-        return {...state, users: [...state.users, ...action.payload.users]}
-    case "SHOW-MORE-USERS":
-      return state;
+      return { ...state, users: [...action.payload.users] };
+    case "USERS/SHOW-MORE-USERS":
+      return {
+        ...state,
+        count: action.payload.usersCount,
+      };
+      case "USERS/SET-CURRENT-PAGE":
+        return {
+          ...state, page: action.payload.currentPage
+        }
+        case "USERS/SET-TOTAL-COUNT": {
+          return {
+            ...state, totalPagesCount: action.payload.totalPagesCount
+          }
+        }
     default:
       return state;
   }
@@ -90,20 +86,52 @@ export const unfollowAC = (userID: number) => {
     },
   } as const;
 };
-export const showMoreAC = (userID: number) => {
+export const showMoreUsersAC = (usersCount: number) => {
   return {
-    type: "SHOW-MORE-USERS",
+    type: "USERS/SHOW-MORE-USERS",
     payload: {
-      userID,
+      usersCount,
     },
   } as const;
 };
 
-export const setUsersAC = (users: Array<UserDataType>) => {
+export const setCurrentPageAC = (currentPage: number) => {
+  return {
+    type: "USERS/SET-CURRENT-PAGE",
+    payload: {
+      currentPage,
+    },
+  } as const;
+};
+
+export const setUsersAC = (users: Array<UserType>) => {
   return {
     type: "SET-USERS",
     payload: {
       users,
     },
   } as const;
+};
+
+export const setTotalCountAC = (totalPagesCount: number) => {
+  return {
+    type: "USERS/SET-TOTAL-COUNT",
+    payload: {
+      totalPagesCount
+    }
+  }as const
+}
+
+export const setUsersTC = (data: {
+  count?: number;
+  page?: number;
+  term?: string;
+  friend?: boolean;
+}) => {
+  return (dispatch: Dispatch<SetUsersACType | SetTotalCountACType>) => {
+    usersAPI.get(data.count, data.page, data.term, data.friend).then((res) => {
+      dispatch(setUsersAC(res.data.items));
+      dispatch(setTotalCountAC(res.data.totalCount))
+    });
+  };
 };
