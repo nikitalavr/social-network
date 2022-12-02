@@ -1,3 +1,7 @@
+import { handleServerNetworkError } from "./../utils/error-utils";
+import { setAppStatusAC, SetAppStatusACType } from "./app-reducer";
+import { profileAPI, UserProfileType } from "./../api/api";
+import { Dispatch } from "redux";
 import { v1 } from "uuid";
 
 export type PostDataType = {
@@ -10,22 +14,45 @@ export type PostDataType = {
 export type ProfilePageType = {
   myPosts: Array<PostDataType>;
   newPostText: string;
+  userData: UserProfileType;
 };
 
 export type AddPostActionType = ReturnType<typeof addPostAC>;
 export type IncLikeActionType = ReturnType<typeof incLikeAC>;
 export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
+export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>;
 
 export type ActionType =
   | AddPostActionType
   | IncLikeActionType
-  | UpdatePostTextActionType;
+  | UpdatePostTextActionType
+  | SetUserProfileACType;
 
-let initialState = {
+let initialState: ProfilePageType = {
   myPosts: [
     { id: v1(), message: "New message1", likes: 0, likeIsPressed: false },
   ],
   newPostText: "",
+  userData: {
+    userId: 0,
+    lookingForAJob: false,
+    lookingForAJobDescription: "",
+    fullName: "",
+    contacts: {
+      github: "",
+      vk: "",
+      facebook: "",
+      instagram: "",
+      twitter: "",
+      website: "",
+      youtube: "",
+      mainLink: "",
+    },
+    photos: {
+      small: "",
+      large: "",
+    },
+  },
 };
 
 export const profileReducer = (
@@ -68,6 +95,11 @@ export const profileReducer = (
         };
     case "UPDATE-POST-TEXT":
       return { ...state, newPostText: action.newText };
+    case "PROFILE/SET-USER-PROFILE":
+      return {
+        ...state,
+        userData: { ...action.payload.userData },
+      };
     default:
       return state;
   }
@@ -93,3 +125,27 @@ export const updatePostTextAC = (newText: string) => {
     newText,
   } as const;
 };
+
+export const setUserProfileAC = (userData: UserProfileType) => {
+  return {
+    type: "PROFILE/SET-USER-PROFILE",
+    payload: {
+      userData,
+    },
+  } as const;
+};
+
+export const getUserProfileTC =
+  (userId: number) =>
+  (dispatch: Dispatch<SetAppStatusACType | SetUserProfileACType>) => {
+    dispatch(setAppStatusAC("loading"));
+    profileAPI
+      .getUserProfile(userId)
+      .then((res) => {
+        dispatch(setUserProfileAC(res.data));
+        dispatch(setAppStatusAC("succeeded"));
+      })
+      .catch((err) => {
+        handleServerNetworkError(err, dispatch);
+      });
+  };
