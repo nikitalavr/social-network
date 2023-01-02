@@ -6,8 +6,8 @@ import {
   incLikeAC,
   PostDataType,
   updatePostTextAC,
-} from "../../../redux/profile-reducer";
-import { RootState } from "../../../redux/redux-store";
+} from "../../../../redux/profile-reducer";
+import { RootState } from "../../../../redux/redux-store";
 import MyPosts from "./MyPosts";
 
 // const MyPostsContainer = () => {

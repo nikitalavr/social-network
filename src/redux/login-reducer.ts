@@ -15,6 +15,7 @@ export const loginReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case "LOGIN/SET-IS-LOGGED-IN":
+      
       return {
         ...state,
         isLoggedIn: action.payload.isLoggedIn,

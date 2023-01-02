@@ -1,13 +1,9 @@
 
-
-.wallpaper {
-    margin: 10px;
-}
 .ava_description {
     display: grid;
     grid-template-areas:
             "a d";
-    grid-template-rows: 150px;
+    grid-template-rows: auto;
     grid-template-columns: 120px 300px;
     grid-gap: 5px;
     padding-left: 5px;
@@ -25,7 +21,7 @@
     margin-top: 20px;
     margin-left: 17px;
     margin-right: 17px;
-    border-radius: 50%;
+    border-radius: 10%;
 }
 .avatar button{
     margin-top: 5px;
@@ -40,4 +36,10 @@
 
 .posts_area {
     margin-top: 15px;
+}
+
+.logoImg {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
 }

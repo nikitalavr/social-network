@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getUserProfileTC } from "../../../redux/profile-reducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
-import UserProfileInfo from "./UserProfileInfo";
+import ProfileInfo from "./MyProfileInfo";
 
-
+// type ProfilePropsType = {
+//   postData: ProfilePageType;
+//   dispatch: (action: ActionType) => void;
+// };
 
 export default function UserProfile() {
   const  userId = useParams()
@@ -18,7 +21,7 @@ export default function UserProfile() {
 
   return (
     <div>
-      <UserProfileInfo userProfile={userProfile} />
+      <ProfileInfo userProfile={userProfile} />
       
     </div>
   );
