@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { Navigation } from "./components/Navigation/Navigation";
-import  UserProfile  from "./components/Profile/UserProfile/UserProfile";
-import { Navigate, Route, Routes } from "react-router-dom";
+import UserProfile from "./components/Profile/UserProfile/UserProfile";
+import { Route, Routes } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
@@ -14,14 +14,15 @@ import { useAppDispatch, useAppSelector } from "./redux/redux-store";
 import { Login } from "./components/Login/Login";
 
 function App() {
-  const isLoggedIn = useAppSelector(state => state.login.isLoggedIn)
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
   const dispatch = useAppDispatch()
-  useEffect(()=> {
-    dispatch(initializeAppTC())
-  }, [dispatch])
-  console.log(isLoggedIn);
   
-  return (
+  useEffect(()=>{
+    dispatch(initializeAppTC())
+  },[dispatch])
+  
+
+  return isLoggedIn ? (
     <div className="app-wrapper">
       <Header />
       <Navigation />
@@ -36,6 +37,10 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
+    </div>
+  ) : (
+    <div className="app-wrapper">
+      <Login />
     </div>
   );
 }
