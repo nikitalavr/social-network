@@ -11,7 +11,6 @@ import { MessagesContainer } from "./components/Messages/MessagesContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import Login from "./components/Login/Login";
 import { useAppDispatch, useAppSelector } from "./redux/redux-store";
-import { stat } from "fs";
 import { initializeAppTC } from "./redux/login-reducer";
 
 function App() {
