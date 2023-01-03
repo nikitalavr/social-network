@@ -2,16 +2,20 @@ import React from "react";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { Navigation } from "./components/Navigation/Navigation";
-import  UserProfile  from "./components/Profile/UserProfile/UserProfile";
+import UserProfile from "./components/Profile/UserProfile/UserProfile";
 import { Route, Routes } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
 import { Settings } from "./components/Settings/Settings";
 import { MessagesContainer } from "./components/Messages/MessagesContainer";
-import  UsersContainer  from "./components/Users/UsersContainer";
+import UsersContainer from "./components/Users/UsersContainer";
+import Login from "./components/Login/Login";
+import { useAppSelector } from "./redux/redux-store";
 
 function App() {
-  return (
+  const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+
+  return isLoggedIn ? (
     <div className="app-wrapper">
       <Header />
       <Navigation />
@@ -25,6 +29,10 @@ function App() {
           <Route path="/users" element={<UsersContainer />} />
         </Routes>
       </div>
+    </div>
+  ) : (
+    <div className="app-wrapper">
+      <Login />
     </div>
   );
 }
