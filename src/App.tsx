@@ -11,7 +11,7 @@ import { MessagesContainer } from "./components/Messages/MessagesContainer";
 import  UsersContainer  from "./components/Users/UsersContainer";
 import { initializeAppTC } from "./redux/login-reducer";
 import { useAppDispatch, useAppSelector } from "./redux/redux-store";
-import { Login } from "./components/Login/Login";
+import Login from "./components/Login/Login";
 
 function App() {
   const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
