@@ -1,8 +1,15 @@
 .header {
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
     grid-area: h;
     background-color: grey;
 
 }
 .header img {
     width: 80px;
+}
+
+.logoutButton {
+    
 }

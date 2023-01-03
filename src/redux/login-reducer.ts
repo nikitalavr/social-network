@@ -1,4 +1,7 @@
-import { handleServerAppError, handleServerNetworkError } from './../utils/error-utils';
+import {
+  handleServerAppError,
+  handleServerNetworkError,
+} from "./../utils/error-utils";
 import { setIsInitializedAC, setAppStatusAC } from "./app-reducer";
 import { authAPI, AuthLoginRequestType } from "./../api/api";
 import { Dispatch } from "redux";
@@ -19,8 +22,8 @@ export const loginReducer = (
         ...state,
         isLoggedIn: action.payload.isLoggedIn,
       };
-      default:
-        return state
+    default:
+      return state;
   }
 };
 
@@ -39,47 +42,21 @@ const setIsLoggedInAC = (isLoggedIn: boolean) => {
 
 //need to add resultCode=1 case
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-  dispatch(setAppStatusAC("loading"));
   authAPI.me().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setAppStatusAC("succeeded"));
-      dispatch(setIsLoggedInAC(true));
-      dispatch(setIsInitializedAC(true));
-    } else dispatch(setIsLoggedInAC(false));
+      dispatch(setIsLoggedInAC(true));      
   });
 };
 
 export const loginTC = (data: AuthLoginRequestType) => (dispatch: Dispatch) => {
-  dispatch(setAppStatusAC("loading"));
   authAPI.login(data).then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setAppStatusAC("succeeded"));
-      dispatch(setIsLoggedInAC(true));
-      dispatch(setIsInitializedAC(true));
-    } else {
-      handleServerAppError(res.data, dispatch)
-      dispatch(setIsLoggedInAC(false));
-    }
-  }).catch(error => {
-    handleServerNetworkError(error, dispatch)
+    dispatch(setIsLoggedInAC(true));
   });
 };
 
 export const logoutTC = () => (dispatch: Dispatch) => {
-  dispatch(setAppStatusAC("loading"));
   authAPI
     .logout()
     .then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedInAC(false));
-        dispatch(setAppStatusAC("succeeded"));
-      } else {
-        dispatch(setIsLoggedInAC(false));
-        handleServerAppError(res.data, dispatch);
-      }
+      dispatch(setIsLoggedInAC(false))
     })
-    .catch((error) => {
-      handleServerNetworkError(error, dispatch);
-    });
 };
-
