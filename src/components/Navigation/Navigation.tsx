@@ -1,13 +1,15 @@
 import React from "react";
 import style from "./Navigation.module.css";
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../../redux/redux-store";
 
 export function Navigation() {
+  const userId = useAppSelector(state => state.login.userId)
   return (
     <nav className={style.nav}>
       <div className={`${style.item} ${style.active}`}>
         <NavLink
-          to="/profile"
+          to={`/profile/${userId}`}
           className={(navData) =>
             navData.isActive ? style.active : style.item
           }
