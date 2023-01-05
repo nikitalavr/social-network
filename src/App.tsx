@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Header } from "./components/Header/Header";
 import { Navigation } from "./components/Navigation/Navigation";
-import UserProfile from "./components/Profile/UserProfile/UserProfile";
 import { Route, Routes } from "react-router-dom";
 import { News } from "./components/News/News";
 import { Music } from "./components/Music/Music";
@@ -12,6 +11,7 @@ import  UsersContainer  from "./components/Users/UsersContainer";
 import { initializeAppTC } from "./redux/login-reducer";
 import { useAppDispatch, useAppSelector } from "./redux/redux-store";
 import Login from "./components/Login/Login";
+import UserProfileContainer from "./components/Profile/UserProfile/UserProfileContainer";
 
 function App() {
   const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
@@ -21,14 +21,13 @@ function App() {
     dispatch(initializeAppTC())
   },[dispatch])
   
-
   return isLoggedIn ? (
     <div className="app-wrapper">
       <Header />
       <Navigation />
       <div className="app-wrapper-content">
         <Routes>
-          <Route path="/profile/:userid" element={<UserProfile />} />
+          <Route path="/profile/:userid" element={<UserProfileContainer />} />
           <Route path="/messages" element={<MessagesContainer />} />
           <Route path="/news" element={<News />} />
           <Route path="/music" element={<Music />} />

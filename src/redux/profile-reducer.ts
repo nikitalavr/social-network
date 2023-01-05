@@ -1,5 +1,4 @@
-import { handleServerNetworkError } from "./../utils/error-utils";
-import { setAppStatusAC, SetAppStatusACType } from "./app-reducer";
+import { SetAppStatusACType } from "./app-reducer";
 import { profileAPI, UserProfileType } from "./../api/api";
 import { Dispatch } from "redux";
 import { v1 } from "uuid";
@@ -96,6 +95,7 @@ export const profileReducer = (
     case "UPDATE-POST-TEXT":
       return { ...state, newPostText: action.newText };
     case "PROFILE/SET-USER-PROFILE":
+      debugger
       return {
         ...state,
         userData: { ...action.payload.userData },
@@ -137,15 +137,12 @@ export const setUserProfileAC = (userData: UserProfileType) => {
 
 export const getUserProfileTC =
   (userId: number) =>
-  (dispatch: Dispatch<SetAppStatusACType | SetUserProfileACType>) => {
-    dispatch(setAppStatusAC("loading"));
+  (dispatch: Dispatch<SetUserProfileACType>) => {
+    debugger
     profileAPI
       .getUserProfile(userId)
       .then((res) => {
+        debugger
         dispatch(setUserProfileAC(res.data));
-        dispatch(setAppStatusAC("succeeded"));
-      })
-      .catch((err) => {
-        handleServerNetworkError(err, dispatch);
       });
   };

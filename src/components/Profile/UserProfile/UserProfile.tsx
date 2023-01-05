@@ -1,25 +1,25 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { UserProfileType } from "../../../api/api";
 import { getUserProfileTC } from "../../../redux/profile-reducer";
-import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
+import { useAppDispatch} from "../../../redux/redux-store";
 import UserProfileInfo from "./UserProfileInfo";
 
+type UserProfilePropsType = {
+  userId: number
+  userProfile: UserProfileType
+}
 
-
-export default function UserProfile() {
-  const  userId = useParams()
-  const userProfile = useAppSelector(state => state.profilePage.userData)
-  
-  
-  const dispatch = useAppDispatch()
+export default function UserProfile(props:UserProfilePropsType) {
+    
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUserProfileTC(Number(userId.userid)))
+    debugger
+    dispatch(getUserProfileTC(Number(props.userId)));
   }, []);
 
   return (
     <div>
-      <UserProfileInfo userProfile={userProfile} />
-      
+      <UserProfileInfo userProfile={props.userProfile} />
     </div>
   );
 }
