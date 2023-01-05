@@ -95,7 +95,7 @@ export const profileReducer = (
     case "UPDATE-POST-TEXT":
       return { ...state, newPostText: action.newText };
     case "PROFILE/SET-USER-PROFILE":
-      debugger
+       
       return {
         ...state,
         userData: { ...action.payload.userData },
@@ -138,11 +138,11 @@ export const setUserProfileAC = (userData: UserProfileType) => {
 export const getUserProfileTC =
   (userId: number) =>
   (dispatch: Dispatch<SetUserProfileACType>) => {
-    debugger
+     
     profileAPI
       .getUserProfile(userId)
       .then((res) => {
-        debugger
+         
         dispatch(setUserProfileAC(res.data));
       });
   };
