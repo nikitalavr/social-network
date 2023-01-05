@@ -1,4 +1,3 @@
-import { SetAppStatusACType } from "./app-reducer";
 import { profileAPI, UserProfileType } from "./../api/api";
 import { Dispatch } from "redux";
 import { v1 } from "uuid";

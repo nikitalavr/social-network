@@ -13,7 +13,6 @@ export default function UserProfile(props:UserProfilePropsType) {
     
   const dispatch = useAppDispatch();
   useEffect(() => {
-    debugger
     dispatch(getUserProfileTC(Number(props.userId)));
   }, [dispatch, props.userId]);
 
