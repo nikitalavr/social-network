@@ -1,6 +1,7 @@
-import React from "react";
-import { Navigate, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { UserType } from "../../api/api";
+import Paginator from "./Paginator";
 import style from "./Users.module.css";
 
 type UsersPropsType = {
@@ -13,25 +14,11 @@ type UsersPropsType = {
 };
 
 export default function Users(props: UsersPropsType) {
-  let pageNumberToRender = [];
-
-  for (let i = 1; i <= Math.ceil(props.totalPagesCount / props.count); i++) {
-    pageNumberToRender.push(
-      <span
-        onClick={() => {
-          props.setCurrentPage(i);
-        }}
-        className={props.currentPage === i ? style.selectedPage : ""}
-      >
-        {i}{" "}
-      </span>
-    );
-  }
 
   
   return (
     <div>
-      <div>{pageNumberToRender}</div>
+      <Paginator totalPagesCount={props.totalPagesCount} portionSize={props.count} currentPage={props.currentPage} setCurrentPage={props.setCurrentPage} />
       {props.users.map((u) => (
         <div key={u.id}>
           <span>
