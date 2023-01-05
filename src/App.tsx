@@ -27,7 +27,7 @@ function App() {
       <Navigation />
       <div className="app-wrapper-content">
         <Routes>
-          <Route path="/profile/:userid" element={<UserProfileContainer />} />
+          <Route path="/profile/:userId" element={<UserProfileContainer />} />
           <Route path="/messages" element={<MessagesContainer />} />
           <Route path="/news" element={<News />} />
           <Route path="/music" element={<Music />} />
