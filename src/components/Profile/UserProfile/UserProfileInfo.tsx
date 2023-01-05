@@ -14,40 +14,39 @@ type ProfileInfoPropsType = {
   userProfile: UserProfileType;
 };
 
-
 export default function ProfileInfo(props: ProfileInfoPropsType) {
-  
-  
-  const logos:any = {
-    "github": [github, props.userProfile.contacts.github],
-    "facebook": [facebook, props.userProfile.contacts.facebook],
-    "vk": [vk, props.userProfile.contacts.vk],
-    "twitter": [twitter,props.userProfile.contacts.twitter],
-    "instagram": [instagram, props.userProfile.contacts.instagram]
-  }
-  const keys = Object.keys(logos)
-  
-  const contactsInstances = []
-  
-  for (let i=0; i<keys.length; i++) {
+  const logos: any = {
+    github: [github, props.userProfile.contacts.github],
+    facebook: [facebook, props.userProfile.contacts.facebook],
+    vk: [vk, props.userProfile.contacts.vk],
+    twitter: [twitter, props.userProfile.contacts.twitter],
+    instagram: [instagram, props.userProfile.contacts.instagram],
+  };
+  const keys = Object.keys(logos);
+
+  const contactsInstances = [];
+
+  for (let i = 0; i < keys.length; i++) {
     let contact = {
       name: keys[i],
       logo: logos[keys[i]][0],
-      url:  logos[keys[i]][1],
-      id: i
-    }
-    contactsInstances.push(contact)
+      url: logos[keys[i]][1],
+      id: i,
+    };
+    contactsInstances.push(contact);
   }
-  
-  const contactsToRender = contactsInstances.map(c => <Contacts key={c.id} name={c.name} logo={c.logo} url={c.url}/>)
+
+  const contactsToRender = contactsInstances.map((c) => (
+    <Contacts key={c.id} name={c.name} logo={c.logo} url={c.url} />
+  ));
   return (
     <div>
       <div className={style.ava_description}>
-        <div className={style.avatar}>
+        <div className={style.avatar}> 
           <img
             src={
-              props.userProfile.photos.large !== null
-                ? props.userProfile.photos.small
+              props.userProfile.photos.large
+                ? props.userProfile.photos.large
                 : defaultAva
             }
             alt="avatar"
@@ -58,10 +57,7 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
           <div>{props.userProfile.lookingForAJobDescription}</div>
           <div>{props.userProfile.contacts.github}</div>
           <div>Contacts: </div>
-
-          <div>
-            {contactsToRender}
-          </div>
+          <div>{contactsToRender}</div>
         </div>
       </div>
     </div>

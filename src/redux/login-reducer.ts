@@ -54,8 +54,8 @@ const setUserIdAC = (userId: number) => {
 //Thunks on login-logout
 export const initializeAppTC = () => (dispatch: Dispatch) => {
   authAPI.me().then((res) => {
-      dispatch(setIsLoggedInAC(true))
-      dispatch(setUserIdAC(res.data.data.id))      
+      dispatch(setUserIdAC(res.data.data.id))
+      dispatch(setIsLoggedInAC(true))   
   });
 };
 

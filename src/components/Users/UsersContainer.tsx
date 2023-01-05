@@ -26,7 +26,6 @@ const UsersContainer = () => {
       totalPagesCount={users.totalPagesCount}
       currentPage={users.page}
       count={users.count}
-      navigateToUserProfile={navigateToUserProfile}
     />
   );
 };

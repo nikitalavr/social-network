@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { UserType } from "../../api/api";
 import Paginator from "./Paginator";
-import style from "./Users.module.css";
+import default_avatar from "./../../assets/defaults/default_avatar.jpeg"
 
 type UsersPropsType = {
   users: Array<UserType>;
@@ -10,7 +10,6 @@ type UsersPropsType = {
   totalPagesCount: number;
   currentPage: number;
   count: number;
-  navigateToUserProfile: () => void
 };
 
 export default function Users(props: UsersPropsType) {
@@ -24,7 +23,7 @@ export default function Users(props: UsersPropsType) {
           <span>
             <div>
               <NavLink to={"/profile/" + u.id}>
-              <img src={u.photos.small} alt="ava"/>
+              <img src={u.photos.small ? u.photos.small : default_avatar}  alt="ava"/>
               </NavLink>
             </div>
             <div>
