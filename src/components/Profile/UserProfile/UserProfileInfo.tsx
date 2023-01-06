@@ -6,12 +6,14 @@ import instagram from "./../../../assets/logos/instagram.png";
 import vk from "./../../../assets/logos/vk.svg";
 import facebook from "./../../../assets/logos/facebook.png";
 import twitter from "./../../../assets/logos/twitter.jpg";
-
 import defaultAva from "./../../../assets/defaults/default_avatar.jpeg";
 import { Contacts } from "./Contacts";
+import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
+import { setUserProfilePhotoTC } from "../../../redux/profile-reducer";
 
 type ProfileInfoPropsType = {
-  userProfile: UserProfileType;
+  userProfile: UserProfileType;  
+  savePhoto: (photo: File) => void
 };
 
 export default function ProfileInfo(props: ProfileInfoPropsType) {
@@ -22,6 +24,8 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
     twitter: [twitter, props.userProfile.contacts.twitter],
     instagram: [instagram, props.userProfile.contacts.instagram],
   };
+  const dispatch = useAppDispatch()
+  const loggedInUser = useAppSelector(state => state.login.userId)
   const keys = Object.keys(logos);
 
   const contactsInstances = [];
@@ -39,6 +43,12 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
   const contactsToRender = contactsInstances.map((c) => (
     <Contacts key={c.id} name={c.name} logo={c.logo} url={c.url} />
   ));
+
+  const avatarPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files?.length){
+      dispatch(setUserProfilePhotoTC(e.currentTarget.files[0]))
+    }
+  }
   return (
     <div>
       <div className={style.ava_description}>
@@ -51,6 +61,7 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
             }
             alt="avatar"
           />
+          {props.userProfile.userId === loggedInUser && <input type={"file"} onChange={avatarPhotoSelected}/>}
         </div>
         <div className={style.description}>
           <div>{props.userProfile.fullName}</div>

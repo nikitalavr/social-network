@@ -18,7 +18,7 @@ export default function UserProfile(props:UserProfilePropsType) {
 
   return (
     <div>
-      <UserProfileInfo userProfile={props.userProfile} />
+      <UserProfileInfo userProfile={props.userProfile} savePhoto={()=>{}}/>
     </div>
   );
 }
