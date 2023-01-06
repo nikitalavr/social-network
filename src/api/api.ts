@@ -43,7 +43,6 @@ export const followAPI = {
   },
 };
 
-
 export const profileAPI = {
   getUserProfile(userId: number) {
     return instance.get<UserProfileType>(`profile/${userId}`);
@@ -56,6 +55,15 @@ export const profileAPI = {
         'Content-Type': 'multipart/form-data'
       }
     })
+  },
+  setProfileStatus(status: string){
+    return instance.put<ResponseType>("profile/status", status)
+  },
+  getUserStatus(userId:number){
+    return instance.get<string>(`profile/status/${userId}`)
+  },
+  setProfileInfo(profileInfo:UserProfileType){
+    return instance.put<ResponseType>("/profile",profileInfo)
   }
 };
 
