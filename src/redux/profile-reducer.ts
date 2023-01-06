@@ -19,12 +19,16 @@ export type AddPostActionType = ReturnType<typeof addPostAC>;
 export type IncLikeActionType = ReturnType<typeof incLikeAC>;
 export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
 export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>;
+export type SetUserProfilePhotoACType = ReturnType<
+  typeof setUserProfilePhotoAC
+>;
 
 export type ActionType =
   | AddPostActionType
   | IncLikeActionType
   | UpdatePostTextActionType
-  | SetUserProfileACType;
+  | SetUserProfileACType
+  | SetUserProfilePhotoACType;
 
 let initialState: ProfilePageType = {
   myPosts: [
@@ -94,11 +98,19 @@ export const profileReducer = (
     case "UPDATE-POST-TEXT":
       return { ...state, newPostText: action.newText };
     case "PROFILE/SET-USER-PROFILE":
-       
       return {
         ...state,
         userData: { ...action.payload.userData },
       };
+    case "PROFILE/SET-PROFILE-PHOTO": {
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          photos: action.payload.photos,
+        },
+      };
+    }
     default:
       return state;
   }
@@ -134,14 +146,26 @@ export const setUserProfileAC = (userData: UserProfileType) => {
   } as const;
 };
 
+export const setUserProfilePhotoAC = (photos: {
+  small: string;
+  large: string;
+}) => {
+  return {
+    type: "PROFILE/SET-PROFILE-PHOTO",
+    payload: {
+      photos,
+    },
+  } as const;
+};
+
 export const getUserProfileTC =
-  (userId: number) =>
-  (dispatch: Dispatch<SetUserProfileACType>) => {
-     
-    profileAPI
-      .getUserProfile(userId)
-      .then((res) => {
-         
-        dispatch(setUserProfileAC(res.data));
-      });
+  (userId: number) => (dispatch: Dispatch<SetUserProfileACType>) => {
+    profileAPI.getUserProfile(userId).then((res) => {
+      dispatch(setUserProfileAC(res.data));
+    });
   };
+
+export const setUserProfilePhotoTC = (photo: File) => (dispatch: Dispatch) =>
+  profileAPI
+    .savePhoto(photo)
+    .then((res) => dispatch(setUserProfilePhotoAC(res.data.data)));
