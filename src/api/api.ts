@@ -48,6 +48,15 @@ export const profileAPI = {
   getUserProfile(userId: number) {
     return instance.get<UserProfileType>(`profile/${userId}`);
   },
+  savePhoto (photo: File) {
+    let photoData = new FormData()
+    photoData.append("file", photo)
+    return instance.put<ResponseType<{small:string, large: string}>>("profile/photo", photoData, {
+      headers:{
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
 };
 
 type UserResponseType = {
