@@ -56,13 +56,14 @@ export const profileAPI = {
       }
     })
   },
-  setProfileStatus(status: string){
+  setProfileStatus(status: {status: string}){
     return instance.put<ResponseType>("profile/status", status)
   },
   getUserStatus(userId:number){
     return instance.get<string>(`profile/status/${userId}`)
   },
   setProfileInfo(profileInfo:UserProfileType){
+    debugger
     return instance.put<ResponseType>("/profile",profileInfo)
   }
 };
