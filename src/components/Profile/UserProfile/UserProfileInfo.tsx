@@ -9,14 +9,21 @@ import twitter from "./../../../assets/logos/twitter.jpg";
 import defaultAva from "./../../../assets/defaults/default_avatar.jpeg";
 import { Contacts } from "./Contacts";
 import { useAppDispatch, useAppSelector } from "../../../redux/redux-store";
-import { setUserProfilePhotoTC } from "../../../redux/profile-reducer";
+import {
+  setUserProfilePhotoTC,
+  setUserProfileStatusTC,
+} from "../../../redux/profile-reducer";
+import EditableStatus from "./EditableSpan";
 
 type ProfileInfoPropsType = {
-  userProfile: UserProfileType;  
-  savePhoto: (photo: File) => void
+  userProfile: UserProfileType;
 };
 
 export default function ProfileInfo(props: ProfileInfoPropsType) {
+  const dispatch = useAppDispatch();
+  const loggedInUser = useAppSelector((state) => state.login.userId);
+  const status = useAppSelector(state => state.profilePage.status)
+
   const logos: any = {
     github: [github, props.userProfile.contacts.github],
     facebook: [facebook, props.userProfile.contacts.facebook],
@@ -24,8 +31,7 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
     twitter: [twitter, props.userProfile.contacts.twitter],
     instagram: [instagram, props.userProfile.contacts.instagram],
   };
-  const dispatch = useAppDispatch()
-  const loggedInUser = useAppSelector(state => state.login.userId)
+
   const keys = Object.keys(logos);
 
   const contactsInstances = [];
@@ -45,14 +51,18 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
   ));
 
   const avatarPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget.files?.length){
-      dispatch(setUserProfilePhotoTC(e.currentTarget.files[0]))
+    if (e.currentTarget.files?.length) {
+      dispatch(setUserProfilePhotoTC(e.currentTarget.files[0]));
     }
-  }
+  };
+  const setStatus = (status: string) => {
+    debugger
+    dispatch(setUserProfileStatusTC({status}));
+  };
   return (
     <div>
       <div className={style.ava_description}>
-        <div className={style.avatar}> 
+        <div className={style.avatar}>
           <img
             src={
               props.userProfile.photos.large
@@ -61,9 +71,12 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
             }
             alt="avatar"
           />
-          {props.userProfile.userId === loggedInUser && <input type={"file"} onChange={avatarPhotoSelected}/>}
+          {props.userProfile.userId === loggedInUser && (
+            <input type={"file"} onChange={avatarPhotoSelected} />
+          )}
         </div>
         <div className={style.description}>
+          <EditableStatus value={status} onChange={setStatus} />
           <div>{props.userProfile.fullName}</div>
           <div>{props.userProfile.lookingForAJobDescription}</div>
           <div>{props.userProfile.contacts.github}</div>
