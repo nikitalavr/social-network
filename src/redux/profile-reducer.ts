@@ -1,6 +1,7 @@
 import { profileAPI, UserProfileType } from "./../api/api";
 import { Dispatch } from "redux";
 import { v1 } from "uuid";
+import { profile } from "console";
 
 export type PostDataType = {
   id: string;
@@ -13,22 +14,23 @@ export type ProfilePageType = {
   myPosts: Array<PostDataType>;
   newPostText: string;
   userData: UserProfileType;
+  status: string;
 };
 
 export type AddPostActionType = ReturnType<typeof addPostAC>;
 export type IncLikeActionType = ReturnType<typeof incLikeAC>;
 export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
 export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>;
-export type SetUserProfilePhotoACType = ReturnType<
-  typeof setUserProfilePhotoAC
->;
+export type SetUserProfilePhotoACType = ReturnType<typeof setUserProfilePhotoAC>;
+export type SetUserProfileStatusACType = ReturnType<typeof setUserProfileStatusAC>;
 
 export type ActionType =
   | AddPostActionType
   | IncLikeActionType
   | UpdatePostTextActionType
   | SetUserProfileACType
-  | SetUserProfilePhotoACType;
+  | SetUserProfilePhotoACType
+  | SetUserProfileStatusACType;
 
 let initialState: ProfilePageType = {
   myPosts: [
@@ -55,6 +57,7 @@ let initialState: ProfilePageType = {
       large: "",
     },
   },
+status: "Test message"
 };
 
 export const profileReducer = (
@@ -111,6 +114,11 @@ export const profileReducer = (
         },
       };
     }
+    case "PROFILE/SET-PROFILE-STATUS":
+      return {
+        ...state,
+        status: action.payload.status
+      }
     default:
       return state;
   }
@@ -158,6 +166,15 @@ export const setUserProfilePhotoAC = (photos: {
   } as const;
 };
 
+export const setUserProfileStatusAC = (status:string) => {
+  return {
+    type: "PROFILE/SET-PROFILE-STATUS",
+    payload: {
+      status
+    }
+  } as const
+}
+
 export const getUserProfileTC =
   (userId: number) => (dispatch: Dispatch<SetUserProfileACType>) => {
     profileAPI.getUserProfile(userId).then((res) => {
@@ -169,3 +186,19 @@ export const setUserProfilePhotoTC = (photo: File) => (dispatch: Dispatch) =>
   profileAPI
     .savePhoto(photo)
     .then((res) => dispatch(setUserProfilePhotoAC(res.data.data)));
+
+export const setUserProfileStatusTC = (status:{status:string}) => (dispatch: Dispatch) => {
+  debugger
+  profileAPI.setProfileStatus(status).then(res => {
+    if(res.data.resultCode === 0) {
+      alert("Profile status updated")
+      dispatch(setUserProfileStatusAC(status.status))
+    }
+  })
+}
+
+export const getUserProfileStatusTC = (userId: number) => (dispatch: Dispatch) => {
+  profileAPI.getUserStatus(userId).then(res => {
+    dispatch(setUserProfileStatusAC(res.data))
+  })
+}
