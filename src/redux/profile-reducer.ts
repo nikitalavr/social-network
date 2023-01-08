@@ -1,7 +1,6 @@
 import { profileAPI, UserProfileType } from "./../api/api";
 import { Dispatch } from "redux";
 import { v1 } from "uuid";
-import { profile } from "console";
 
 export type PostDataType = {
   id: string;
@@ -15,6 +14,7 @@ export type ProfilePageType = {
   newPostText: string;
   userData: UserProfileType;
   status: string;
+  follow: boolean;
 };
 
 export type AddPostActionType = ReturnType<typeof addPostAC>;
@@ -23,6 +23,8 @@ export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
 export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>;
 export type SetUserProfilePhotoACType = ReturnType<typeof setUserProfilePhotoAC>;
 export type SetUserProfileStatusACType = ReturnType<typeof setUserProfileStatusAC>;
+export type SetFollowACType = ReturnType<typeof setFollowAC>;
+
 
 export type ActionType =
   | AddPostActionType
@@ -30,7 +32,8 @@ export type ActionType =
   | UpdatePostTextActionType
   | SetUserProfileACType
   | SetUserProfilePhotoACType
-  | SetUserProfileStatusACType;
+  | SetUserProfileStatusACType
+  | SetFollowACType;
 
 let initialState: ProfilePageType = {
   myPosts: [
@@ -57,7 +60,8 @@ let initialState: ProfilePageType = {
       large: "",
     },
   },
-status: "Test message"
+status: "Test message",
+follow: false,
 };
 
 export const profileReducer = (
@@ -105,7 +109,7 @@ export const profileReducer = (
         ...state,
         userData: { ...action.payload.userData },
       };
-    case "PROFILE/SET-PROFILE-PHOTO": {
+    case "PROFILE/SET-PROFILE-PHOTO":
       return {
         ...state,
         userData: {
@@ -113,12 +117,16 @@ export const profileReducer = (
           photos: action.payload.photos,
         },
       };
-    }
     case "PROFILE/SET-PROFILE-STATUS":
       return {
         ...state,
         status: action.payload.status
       }
+    // case "PROFILE/SET-FOLLOW-STATUS":
+    //   return {
+    //     ...state,
+    //     follow: action.payload.follow
+    //   }
     default:
       return state;
   }
@@ -175,6 +183,15 @@ export const setUserProfileStatusAC = (status:string) => {
   } as const
 }
 
+export const setFollowAC = (follow: boolean) => {
+  return {
+    type: "PROFILE/SET-FOLLOW-STATUS",
+    payload: {
+      follow
+    }
+  } as const
+}
+
 export const getUserProfileTC =
   (userId: number) => (dispatch: Dispatch<SetUserProfileACType>) => {
     profileAPI.getUserProfile(userId).then((res) => {
@@ -188,7 +205,6 @@ export const setUserProfilePhotoTC = (photo: File) => (dispatch: Dispatch) =>
     .then((res) => dispatch(setUserProfilePhotoAC(res.data.data)));
 
 export const setUserProfileStatusTC = (status:{status:string}) => (dispatch: Dispatch) => {
-  debugger
   profileAPI.setProfileStatus(status).then(res => {
     if(res.data.resultCode === 0) {
       alert("Profile status updated")
@@ -202,3 +218,8 @@ export const getUserProfileStatusTC = (userId: number) => (dispatch: Dispatch) =
     dispatch(setUserProfileStatusAC(res.data))
   })
 }
+
+
+// export const getUserFollowStatusTC = (userId: number) => {
+
+// }

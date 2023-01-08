@@ -1,11 +1,11 @@
-import { usersAPI, UserType } from "./../api/api";
+import { followAPI, usersAPI, UserType } from "./../api/api";
 import { Dispatch } from "redux";
 
 type InitialStateType = {
   users: UserType[];
   page: number;
   count: number;
-  totalPagesCount: number
+  totalPagesCount: number;
 };
 
 const initialState: InitialStateType = {
@@ -39,14 +39,14 @@ export const usersReduser = (
       return {
         ...state,
         users: state.users.map((u) =>
-          u.id === action.payload.userID ? { ...u, followStatus: true } : u
+          u.id === action.payload.userID ? { ...u, followed: true } : u
         ),
       };
     case "UNFOLLOW":
       return {
         ...state,
         users: state.users.map((u) =>
-          u.id === action.payload.userID ? { ...u, followStatus: false } : u
+          u.id === action.payload.userID ? { ...u, followed: false } : u
         ),
       };
     case "SET-USERS":
@@ -56,15 +56,17 @@ export const usersReduser = (
         ...state,
         count: action.payload.usersCount,
       };
-      case "USERS/SET-CURRENT-PAGE":
-        return {
-          ...state, page: action.payload.currentPage
-        }
-        case "USERS/SET-TOTAL-COUNT": {
-          return {
-            ...state, totalPagesCount: action.payload.totalPagesCount
-          }
-        }
+    case "USERS/SET-CURRENT-PAGE":
+      return {
+        ...state,
+        page: action.payload.currentPage,
+      };
+    case "USERS/SET-TOTAL-COUNT": {
+      return {
+        ...state,
+        totalPagesCount: action.payload.totalPagesCount,
+      };
+    }
     default:
       return state;
   }
@@ -117,10 +119,10 @@ export const setTotalCountAC = (totalPagesCount: number) => {
   return {
     type: "USERS/SET-TOTAL-COUNT",
     payload: {
-      totalPagesCount
-    }
-  }as const
-}
+      totalPagesCount,
+    },
+  } as const;
+};
 
 export const setUsersTC = (data: {
   count?: number;
@@ -131,7 +133,23 @@ export const setUsersTC = (data: {
   return (dispatch: Dispatch<SetUsersACType | SetTotalCountACType>) => {
     usersAPI.get(data.count, data.page, data.term, data.friend).then((res) => {
       dispatch(setUsersAC(res.data.items));
-      dispatch(setTotalCountAC(res.data.totalCount))
+      dispatch(setTotalCountAC(res.data.totalCount));
     });
   };
+};
+
+export const followTC = (userId: number) => (dispatch: Dispatch) => {
+  followAPI.follow(userId).then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(followAC(userId));
+    }
+  });
+};
+
+export const unfollowTC = (userId: number) => (dispatch: Dispatch) => {
+  followAPI.unfollow(userId).then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(unfollowAC(userId));
+    }
+  });
 };
