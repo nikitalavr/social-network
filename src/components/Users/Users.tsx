@@ -10,11 +10,12 @@ type UsersPropsType = {
   totalPagesCount: number;
   currentPage: number;
   count: number;
+  setFollowStatus: (userId: number) => void
+  setUnfollowStatus: (userId: number) => void
 };
 
 export default function Users(props: UsersPropsType) {
 
-  
   return (
     <div>
       <Paginator totalPagesCount={props.totalPagesCount} portionSize={props.count} currentPage={props.currentPage} setCurrentPage={props.setCurrentPage} />
@@ -27,7 +28,7 @@ export default function Users(props: UsersPropsType) {
               </NavLink>
             </div>
             <div>
-              {u.followed ? <button>Unfollow</button> : <button>Follow</button>}
+              {u.followed ? <button onClick={()=>props.setUnfollowStatus(u.id)}>Unfollow</button> : <button onClick={()=>props.setFollowStatus(u.id)}>Follow</button>}
             </div>
           </span>
           <span>

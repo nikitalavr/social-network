@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/redux-store";
-import { setCurrentPageAC, setUsersTC } from "../../redux/users-reducer";
+import { followTC, setCurrentPageAC, setUsersTC, unfollowTC } from "../../redux/users-reducer";
 import Users from "./Users";
 
 const UsersContainer = () => {
@@ -15,10 +15,20 @@ const UsersContainer = () => {
   const setCurrentPage = (page: number) => {
     dispatch(setCurrentPageAC(page));
   };
-  const navigateToUserProfile = () => {
-    debugger
-    return <Navigate to="/profile"/>
+
+  //Obsolet
+  // const navigateToUserProfile = () => {
+  //   return <Navigate to="/profile"/>
+  // }
+
+  const setFollowStatus = (userId: number) => {
+    dispatch(followTC(userId))
   }
+
+  const setUnfollowStatus = (userId: number) => {
+    dispatch(unfollowTC(userId))
+  }
+
   return (
     <Users
       users={users.users}
@@ -26,6 +36,8 @@ const UsersContainer = () => {
       totalPagesCount={users.totalPagesCount}
       currentPage={users.page}
       count={users.count}
+      setFollowStatus={setFollowStatus}
+      setUnfollowStatus={setUnfollowStatus}
     />
   );
 };
