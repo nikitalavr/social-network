@@ -33,7 +33,7 @@ export const usersAPI = {
 
 export const followAPI = {
   getStatus(userId: number) {
-    return instance.get<true>(`follow/${userId}`);
+    return instance.get<boolean>(`follow/${userId}`);
   },
   follow(userId: number) {
     return instance.post<ResponseType>(`follow/${userId}`);
