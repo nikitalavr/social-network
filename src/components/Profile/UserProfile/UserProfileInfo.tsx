@@ -17,6 +17,7 @@ import EditableStatus from "./EditableSpan";
 
 type ProfileInfoPropsType = {
   userProfile: UserProfileType;
+  userFollowStatus: boolean
 };
 
 export default function ProfileInfo(props: ProfileInfoPropsType) {
@@ -50,13 +51,16 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
     <Contacts key={c.id} name={c.name} logo={c.logo} url={c.url} />
   ));
 
+  let buttonFollow = <></>
+  
+  if (props.userProfile.userId !== loggedInUser) buttonFollow = props.userFollowStatus ? <button>Unfollow</button> : <button>Follow</button>
+
   const avatarPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.length) {
       dispatch(setUserProfilePhotoTC(e.currentTarget.files[0]));
     }
   };
   const setStatus = (status: string) => {
-    debugger
     dispatch(setUserProfileStatusTC({status}));
   };
   return (
@@ -74,6 +78,7 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
           {props.userProfile.userId === loggedInUser && (
             <input type={"file"} onChange={avatarPhotoSelected} />
           )}
+          {buttonFollow}
         </div>
         <div className={style.description}>
           <EditableStatus value={status} onChange={setStatus} />
