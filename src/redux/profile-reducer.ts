@@ -1,4 +1,4 @@
-import { profileAPI, UserProfileType } from "./../api/api";
+import { followAPI, profileAPI, UserProfileType } from "./../api/api";
 import { Dispatch } from "redux";
 import { v1 } from "uuid";
 
@@ -122,11 +122,11 @@ export const profileReducer = (
         ...state,
         status: action.payload.status
       }
-    // case "PROFILE/SET-FOLLOW-STATUS":
-    //   return {
-    //     ...state,
-    //     follow: action.payload.follow
-    //   }
+    case "PROFILE/SET-FOLLOW-STATUS":
+      return {
+        ...state,
+        follow: action.payload.follow
+      }
     default:
       return state;
   }
@@ -184,6 +184,7 @@ export const setUserProfileStatusAC = (status:string) => {
 }
 
 export const setFollowAC = (follow: boolean) => {
+  
   return {
     type: "PROFILE/SET-FOLLOW-STATUS",
     payload: {
@@ -220,6 +221,9 @@ export const getUserProfileStatusTC = (userId: number) => (dispatch: Dispatch) =
 }
 
 
-// export const getUserFollowStatusTC = (userId: number) => {
-
-// }
+export const getUserFollowStatusTC = (userId: number) => (dispatch: Dispatch) => {
+  followAPI.getStatus(userId).then(res => {
+    
+    dispatch(setFollowAC(res.data))
+  })
+}
