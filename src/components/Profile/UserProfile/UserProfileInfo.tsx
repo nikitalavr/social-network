@@ -14,16 +14,17 @@ import {
   setUserProfileStatusTC,
 } from "../../../redux/profile-reducer";
 import EditableStatus from "./EditableSpan";
+import { followTC, unfollowTC } from "../../../redux/users-reducer";
 
 type ProfileInfoPropsType = {
   userProfile: UserProfileType;
-  userFollowStatus: boolean
+  userFollowStatus: boolean;
 };
 
 export default function ProfileInfo(props: ProfileInfoPropsType) {
   const dispatch = useAppDispatch();
   const loggedInUser = useAppSelector((state) => state.login.userId);
-  const status = useAppSelector(state => state.profilePage.status)
+  const status = useAppSelector((state) => state.profilePage.status);
 
   const logos: any = {
     github: [github, props.userProfile.contacts.github],
@@ -51,9 +52,26 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
     <Contacts key={c.id} name={c.name} logo={c.logo} url={c.url} />
   ));
 
-  let buttonFollow = <></>
-  
-  if (props.userProfile.userId !== loggedInUser) buttonFollow = props.userFollowStatus ? <button>Unfollow</button> : <button>Follow</button>
+  const setFollowStatus = (userId: number) => {
+    dispatch(followTC({ userId, component: "profile" }));
+  };
+
+  const setUnfollowStatus = (userId: number) => {
+    dispatch(unfollowTC({ userId, component: "profile" }));
+  };
+
+  let buttonFollow = <></>;
+
+  if (props.userProfile.userId !== loggedInUser)
+    buttonFollow = props.userFollowStatus ? (
+      <button onClick={() => setUnfollowStatus(props.userProfile.userId)}>
+        Unfollow
+      </button>
+    ) : (
+      <button onClick={() => setFollowStatus(props.userProfile.userId)}>
+        Follow
+      </button>
+    );
 
   const avatarPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files?.length) {
@@ -61,8 +79,9 @@ export default function ProfileInfo(props: ProfileInfoPropsType) {
     }
   };
   const setStatus = (status: string) => {
-    dispatch(setUserProfileStatusTC({status}));
+    dispatch(setUserProfileStatusTC({ status }));
   };
+
   return (
     <div>
       <div className={style.ava_description}>

@@ -22,11 +22,11 @@ const UsersContainer = () => {
   // }
 
   const setFollowStatus = (userId: number) => {
-    dispatch(followTC(userId))
+    dispatch(followTC({userId, component: "users"}))
   }
 
   const setUnfollowStatus = (userId: number) => {
-    dispatch(unfollowTC(userId))
+    dispatch(unfollowTC({userId, component: "users"}))
   }
 
   return (
