@@ -23,7 +23,7 @@ export type UpdatePostTextActionType = ReturnType<typeof updatePostTextAC>;
 export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>;
 export type SetUserProfilePhotoACType = ReturnType<typeof setUserProfilePhotoAC>;
 export type SetUserProfileStatusACType = ReturnType<typeof setUserProfileStatusAC>;
-export type SetFollowACType = ReturnType<typeof setFollowAC>;
+export type SetFollowACType = ReturnType<typeof profileSetFollowAC>;
 
 
 export type ActionType =
@@ -123,6 +123,7 @@ export const profileReducer = (
         status: action.payload.status
       }
     case "PROFILE/SET-FOLLOW-STATUS":
+      
       return {
         ...state,
         follow: action.payload.follow
@@ -183,7 +184,7 @@ export const setUserProfileStatusAC = (status:string) => {
   } as const
 }
 
-export const setFollowAC = (follow: boolean) => {
+export const profileSetFollowAC = (follow: boolean) => {
   
   return {
     type: "PROFILE/SET-FOLLOW-STATUS",
@@ -224,6 +225,6 @@ export const getUserProfileStatusTC = (userId: number) => (dispatch: Dispatch) =
 export const getUserFollowStatusTC = (userId: number) => (dispatch: Dispatch) => {
   followAPI.getStatus(userId).then(res => {
     
-    dispatch(setFollowAC(res.data))
+    dispatch(profileSetFollowAC(res.data))
   })
 }

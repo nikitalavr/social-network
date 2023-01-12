@@ -1,5 +1,6 @@
 import { followAPI, usersAPI, UserType } from "./../api/api";
 import { Dispatch } from "redux";
+import { profileSetFollowAC } from "./profile-reducer";
 
 type InitialStateType = {
   users: UserType[];
@@ -138,18 +139,28 @@ export const setUsersTC = (data: {
   };
 };
 
-export const followTC = (userId: number) => (dispatch: Dispatch) => {
-  followAPI.follow(userId).then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(followAC(userId));
+type ComponentType = "users" | "profile"
+
+export const followTC = (data:{userId: number, component: ComponentType}) => (dispatch: Dispatch) => {
+  followAPI.follow(data.userId).then((res) => {
+    if (res.data.resultCode === 0 && data.component === "users") {
+      
+      dispatch(followAC(data.userId));
+    } else if (res.data.resultCode === 0 && data.component === "profile") {
+      
+      dispatch(profileSetFollowAC(true))
     }
   });
 };
 
-export const unfollowTC = (userId: number) => (dispatch: Dispatch) => {
-  followAPI.unfollow(userId).then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(unfollowAC(userId));
+export const unfollowTC = (data:{userId: number, component: ComponentType}) => (dispatch: Dispatch) => {
+  followAPI.unfollow(data.userId).then((res) => {
+    if (res.data.resultCode === 0 && data.component === "users") {
+      
+      dispatch(unfollowAC(data.userId));
+    } else if (res.data.resultCode === 0 && data.component === "profile") {
+      
+      dispatch(profileSetFollowAC(false))
     }
   });
 };
