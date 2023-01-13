@@ -221,7 +221,6 @@ export const getUserProfileStatusTC = (userId: number) => (dispatch: Dispatch) =
   })
 }
 
-
 export const getUserFollowStatusTC = (userId: number) => (dispatch: Dispatch) => {
   followAPI.getStatus(userId).then(res => {
     
